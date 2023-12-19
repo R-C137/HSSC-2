@@ -15,6 +15,11 @@ using UnityEngine;
 public class SantaBehaviour : MonoBehaviour
 {
     /// <summary>
+    /// Reference to the shooting handler
+    /// </summary>
+    public Shooting shooting;
+
+    /// <summary>
     /// The number of lives the player has
     /// </summary>
     public int lives = 3;
@@ -23,13 +28,12 @@ public class SantaBehaviour : MonoBehaviour
     {
         if (other.CompareTag("Gift"))
         {
-            // Increase gift counter
+            shooting.giftCounter++;
+            Destroy(other.gameObject);
         }
         if (other.CompareTag("Trap"))
         {
-            lives--;
-            if (lives <= 0)
-                Logging.singleton.Log("Game over", LogSeverity.Info);
+            Destroy(other.gameObject);
         }
     }
 }
