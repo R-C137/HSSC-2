@@ -9,11 +9,10 @@
  * Changes: 
  *      [19/12/2023] - Initial implementation (C137)
  *                   - Made ResetTimescale() a public function (C137)
+ *                   - Moved gift counting and display to Utility script (C137)
  */
 using Cinemachine;
-using CsUtils.Systems.Logging;
 using System;
-using TMPro;
 using UnityEngine;
 
 [Serializable]
@@ -36,11 +35,6 @@ public class Shooting : MonoBehaviour
     /// The different shooting controls
     /// </summary>
     public ShootingControls controls;
-
-    /// <summary>
-    /// The display for the gift counter
-    /// </summary>
-    public TextMeshProUGUI giftCounterShower;
 
     /// <summary>
     /// The camera handling the shooting
@@ -66,11 +60,6 @@ public class Shooting : MonoBehaviour
     /// The interval the player needs to wait before being able to shoot again
     /// </summary>
     public float shootingInterval = .2f;
-
-    /// <summary>
-    /// The amount of gifts the player has
-    /// </summary>
-    public int giftCounter;
 
     /// <summary>
     /// The speed at which the projectile is shot
@@ -147,8 +136,6 @@ public class Shooting : MonoBehaviour
     {
         HandleCameraRotation();
         HandleShooting();
-
-        giftCounterShower.text = $"Gifts: {giftCounter}";
     }
 
     void HandleCameraRotation()
@@ -183,7 +170,7 @@ public class Shooting : MonoBehaviour
         if (!Input.GetKeyDown(controls.shoot))
             return;
 
-        if (giftCounter <= 0)
+        if (Utility.singleton.giftCounter <= 0)
             return;
 
         GameObject obj = Instantiate(projectile);
@@ -195,7 +182,7 @@ public class Shooting : MonoBehaviour
         rb.AddForce(shootingCamera.transform.forward * projectileSpeed, ForceMode.VelocityChange);
 
         canShoot = false;
-        giftCounter--;
+        Utility.singleton.giftCounter--;
 
         LeanTween.delayedCall(shootingInterval, () => canShoot = true).setIgnoreTimeScale(true);
     }

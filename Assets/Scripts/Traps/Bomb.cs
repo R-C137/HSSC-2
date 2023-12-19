@@ -8,6 +8,7 @@
  * 
  * Changes: 
  *      [19/12/2023] - Initial implementation (C137)
+ *                   - Improved hit behaviour (C137)
  */
 using CsUtils.Systems.Logging;
 using UnityEngine;
@@ -44,8 +45,8 @@ public class Bomb : TrapBehaviour
 
             Logging.singleton.Log("Santa has hit an activated bomb and has been damaged", LogSeverity.Info);
             
-            Destroy(gameObject);
         }
+        Destroy(gameObject);
     }
 
     private void BombActivated()

@@ -26,6 +26,10 @@ public class ProjectileBehaviour : MonoBehaviour
         {
             collision.collider.GetComponent<TrapBehaviour>().TrapShot();
         }
+        if (collision.collider.CompareTag("Delivery"))
+        {
+            Utility.singleton.GiftDelivered();
+        }
 
         Destroy(gameObject);
     }

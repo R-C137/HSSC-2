@@ -61,7 +61,7 @@ public class SantaBehaviour : Singleton<SantaBehaviour>
     {
         if (other.CompareTag("Gift"))
         {
-            shooting.giftCounter++;
+            Utility.singleton.giftCounter++;
             Destroy(other.gameObject);
         }
         if (other.CompareTag("Trap"))
