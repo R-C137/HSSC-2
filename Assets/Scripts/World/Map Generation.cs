@@ -8,12 +8,15 @@
  * 
  * Changes: 
  *      [18/12/2023] - Initial implementation (C137)
+ *      
+ *      [19/12/2023] - Renamed fields (C137)
  */
+using CsUtils;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MapGeneration : MonoBehaviour
+public class MapGeneration : Singleton<MapGeneration>
 {
     /// <summary>
     /// The target whom to spawn the terrain around
@@ -39,7 +42,7 @@ public class MapGeneration : MonoBehaviour
     /// Reference to all the terrains in the map
     /// </summary>
     [Header("Debug Utils")]
-    public List<GameObject> spawnedTerrain = new();
+    public List<GameObject> spawnedTerrains = new();
 
     void Start()
     {
@@ -56,7 +59,7 @@ public class MapGeneration : MonoBehaviour
 
     void SpawnTerrain(float upToX)
     {
-        float lastX = spawnedTerrain.Count > 0 ? spawnedTerrain[^1].transform.position.x : 0;
+        float lastX = spawnedTerrains.Count > 0 ? spawnedTerrains[^1].transform.position.x : 0;
 
         while (lastX < upToX)
         {
@@ -70,7 +73,7 @@ public class MapGeneration : MonoBehaviour
 
             // Instantiate new terrain and add it to the list
             GameObject newTerrain = Instantiate(prefab, position, Quaternion.identity);
-            spawnedTerrain.Add(newTerrain);
+            spawnedTerrains.Add(newTerrain);
 
             lastX += terrainSize;
         }
@@ -80,11 +83,11 @@ public class MapGeneration : MonoBehaviour
     {
         for (int i = 0; i >= 0; i--)
         {
-            if (spawnedTerrain[i].transform.position.x < upToX)
+            if (spawnedTerrains[i].transform.position.x < upToX)
             {
                 // Destroy terrain and remove it from the list
-                Destroy(spawnedTerrain[i]);
-                spawnedTerrain.RemoveAt(i);
+                Destroy(spawnedTerrains[i]);
+                spawnedTerrains.RemoveAt(i);
             }
             else
                 break;

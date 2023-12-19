@@ -42,6 +42,8 @@
  *      [16/12/2023] - Removed unnecessary stripping of the exception string (C137)
  *                   - Exceptions are now only logged in the logging file (C137)
  *                   - Stacktrace, console logging and file logging can now be forcefully disabled or enabled when calling the Log() function (C137)
+ *                   
+ *      [19/12/2023] - Fixed hex colour parsing (C137)
  */
 using CsUtils.Extensions;
 using System;
@@ -503,11 +505,11 @@ namespace CsUtils.Systems.Logging
         {
             logColors = new LogColors()
             {
-                debug = StaticUtils.ColorFromHex("A6A6A6"),
-                info = StaticUtils.ColorFromHex("FBF6EE"),
-                warning = StaticUtils.ColorFromHex("EEC759"),
-                error = StaticUtils.ColorFromHex("EF4040"),
-                fatal = StaticUtils.ColorFromHex("C70039")
+                debug = StaticUtils.ColorFromHex("#A6A6A6"),
+                info = StaticUtils.ColorFromHex("#FBF6EE"),
+                warning = StaticUtils.ColorFromHex("#EEC759"),
+                error = StaticUtils.ColorFromHex("#EF4040"),
+                fatal = StaticUtils.ColorFromHex("#C70039")
             };
         }
     }
