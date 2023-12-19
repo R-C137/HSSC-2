@@ -8,6 +8,7 @@
  * 
  * Changes: 
  *      [19/12/2023] - Initial implementation (C137)
+ *                   - Made ResetTimescale() a public function (C137)
  */
 using Cinemachine;
 using CsUtils.Systems.Logging;
@@ -136,7 +137,7 @@ public class Shooting : MonoBehaviour
     /// <summary>
     /// Resets the time scale back to its original value
     /// </summary>
-    void ResetTimescale()
+    public void ResetTimescale()
     {
         Time.timeScale = 1;
         Time.fixedDeltaTime = normalFixedDeltatime;

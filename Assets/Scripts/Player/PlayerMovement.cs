@@ -8,8 +8,12 @@
  * 
  * Changes: 
  *      [18/12/2023] - Initial implementation (C137)
- *      [18/12/2023] - Added clamps (Archetype)
+ *                   - Added clamps (Archetype)
+ *      
+ *      [19/12/2023] - Added a boolean to disable movement (C137)
+ *                   - Made class a singleton (C137)
  */
+using CsUtils;
 using UnityEngine;
 
 [System.Serializable]
@@ -31,7 +35,7 @@ public struct PlayerMovementControls
     public KeyCode left;
 }
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : Singleton<PlayerMovement>
 {
     /// <summary>
     /// The controls for the player movement
@@ -64,14 +68,21 @@ public class PlayerMovement : MonoBehaviour
     public bool moveForward = true;
 
     /// <summary>
+    /// Whether to do any movement at all
+    /// </summary>
+    public bool doMovement = true;
+
+    /// <summary>
     /// Clamp limits
     /// </summary>
     public float minY = -0.5f, maxY = 40f, minZ = -23f, maxZ = 23f;
 
     private void FixedUpdate()
     {
-        HandleMovement();
+        if (!doMovement)
+            return;
 
+        HandleMovement();
         Clamp();
     }
 

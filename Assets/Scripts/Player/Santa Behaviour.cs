@@ -25,7 +25,37 @@ public class SantaBehaviour : Singleton<SantaBehaviour>
     /// <summary>
     /// The number of lives the player has
     /// </summary>
-    public int lives = 3;
+    public int lives
+    {
+        get
+        {
+            return _lives;
+        }
+        set
+        {
+            _lives = value;
+            LifeUpdated();
+        }
+    }
+
+    [SerializeField, InspectorName("Lives")]
+    private int _lives;
+
+    /// <summary>
+    /// Called when the player's lives are updated
+    /// </summary>
+    void LifeUpdated()
+    {
+        if(lives <= 0)
+            Utility.singleton.DoGameOver();
+    }
+
+    [ContextMenu("Reduce Life")]
+    void ReduceLife()
+    {
+        lives--;
+        Logging.singleton.Log("Life is now at {0}", LogSeverity.Info, parameters: lives);
+    }
 
     private void OnTriggerEnter(Collider other)
     {

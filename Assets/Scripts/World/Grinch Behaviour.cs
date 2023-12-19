@@ -8,12 +8,15 @@
  * 
  * Changes: 
  *      [19/12/2023] - Initial implementation (C137)
+ *                   - Spawning of gifts can now be disabled (C137)
+ *                   - Made class a singleton (C137)
  */
+using CsUtils;
 using CsUtils.Extensions;
 using System.Collections;
 using UnityEngine;
 
-public class GrinchBehaviour : MonoBehaviour
+public class GrinchBehaviour : Singleton<GrinchBehaviour>
 {
     /// <summary>
     /// The different gifts to be spawned
@@ -30,6 +33,11 @@ public class GrinchBehaviour : MonoBehaviour
     /// </summary>
     public float spawnInterval = 2f;
 
+    /// <summary>
+    /// Whether gifts can be spawned
+    /// </summary>
+    public bool spawnGifts = true;
+
     private void Start()
     {
         StartCoroutine(SpawnGifts());
@@ -40,6 +48,10 @@ public class GrinchBehaviour : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(spawnInterval);
+
+            if (!spawnGifts)
+                yield return new WaitUntil(() => spawnGifts);
+
             GameObject gift = Instantiate(gifts[Random.Range(0, gifts.Length)]);
 
             gift.transform.position = spawnRegion.GetRandomPoint();
