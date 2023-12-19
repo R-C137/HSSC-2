@@ -4,10 +4,11 @@
  * Authors: C137
  * Original: C137
  * 
- * Edited By: C137
+ * Edited By: C137, Archetype
  * 
  * Changes: 
  *      [18/12/2023] - Initial implementation (C137)
+ *      [18/12/2023] - Added clamps (Archetype)
  */
 using UnityEngine;
 
@@ -62,9 +63,27 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     public bool moveForward = true;
 
-    private void Update()
+    /// <summary>
+    /// Clamp limits
+    /// </summary>
+    public float minY = -0.5f, maxY = 40f, minZ = -23f, maxZ = 23f;
+
+    private void FixedUpdate()
     {
         HandleMovement();
+
+        Clamp();
+    }
+
+    void Clamp()
+    {
+        // Get the current position of the character
+        Vector3 currentPosition = player.position;
+
+        // Clamp posiitons
+        currentPosition.y = Mathf.Clamp(currentPosition.y, minY, maxY);
+        currentPosition.z = Mathf.Clamp(currentPosition.z, minZ, maxZ);
+        player.position = currentPosition;
     }
 
     public void HandleMovement()
@@ -77,12 +96,12 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKey(controls.up))
             pos.y += verticalSpeed * Time.deltaTime;
         else
-            pos.y -= verticalSpeed * Time.deltaTime; 
+            pos.y -= verticalSpeed * Time.deltaTime;
 
-        if(Input.GetKey(controls.right))
+        if (Input.GetKey(controls.right))
             pos.z -= lateralSpeed * Time.deltaTime;
 
-        if(Input.GetKey(controls.left))
+        if (Input.GetKey(controls.left))
             pos.z += lateralSpeed * Time.deltaTime;
 
         player.position = pos;
