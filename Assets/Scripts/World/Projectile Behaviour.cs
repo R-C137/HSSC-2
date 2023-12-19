@@ -15,6 +15,9 @@ public class ProjectileBehaviour : MonoBehaviour
 {
     private void OnCollisionEnter(Collision collision)
     {
+        if (collision.collider.isTrigger)
+            return;
+
         if (collision.collider.CompareTag("Gift"))
         {
             Destroy(collision.gameObject);

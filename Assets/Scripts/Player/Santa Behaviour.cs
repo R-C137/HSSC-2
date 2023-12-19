@@ -8,11 +8,14 @@
  * 
  * Changes: 
  *      [19/12/2023] - Initial implementation (C137)
+ *                   - Made script a singleton (C137)
+ *                   - Custom trap hitting (C137)
  */
+using CsUtils;
 using CsUtils.Systems.Logging;
 using UnityEngine;
 
-public class SantaBehaviour : MonoBehaviour
+public class SantaBehaviour : Singleton<SantaBehaviour>
 {
     /// <summary>
     /// Reference to the shooting handler
@@ -33,7 +36,7 @@ public class SantaBehaviour : MonoBehaviour
         }
         if (other.CompareTag("Trap"))
         {
-            Destroy(other.gameObject);
+            other.GetComponent<TrapBehaviour>().TrapHit();
         }
     }
 }

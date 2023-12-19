@@ -9,6 +9,8 @@
  * Changes: 
  *      [19/12/2023] - Initial implementation (C137)
  *                   - Trap is now destroyed when it hits the grinch (C137)
+ *                   - Made functions overridable (C137)
+ *                   - Custom behaviours when the player hits the trap (C137)
  */
 using System.Collections;
 using UnityEngine;
@@ -35,7 +37,13 @@ public class TrapBehaviour : MonoBehaviour
     /// </summary>
     public bool shot;
 
-    private void Start()
+    /// <summary>
+    /// Event raised when the trap is activated
+    /// </summary>
+    public delegate void TrapActivated();
+    public event TrapActivated onTrapActivated;
+
+    public virtual void Start()
     {
         StartCoroutine(ActivationTimer());
     }
@@ -43,7 +51,7 @@ public class TrapBehaviour : MonoBehaviour
     /// <summary>
     /// Called when the trap is shot by the player
     /// </summary>
-    public void TrapShot()
+    public virtual void TrapShot()
     {
         if (shot)
             return;
@@ -59,17 +67,27 @@ public class TrapBehaviour : MonoBehaviour
         ShootBack();
     }
 
+    /// <summary>
+    /// Called when the player physically hits this trap
+    /// </summary>
+    public virtual void TrapHit()
+    {
+        Destroy(gameObject);
+    }
+
     IEnumerator ActivationTimer()
     {
         yield return new WaitForSeconds(activationTime);
 
         isActivated = true;
+
+        onTrapActivated?.Invoke();
     }
 
     /// <summary>
     /// Shoots the trap back at the Grinch
     /// </summary>
-    void ShootBack()
+    protected virtual void ShootBack()
     {
         transform.parent = Utility.singleton.grinch.transform;
 

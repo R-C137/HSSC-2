@@ -132,7 +132,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 244867300}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -529,7 +529,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 438607860}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: LeftRopeHook
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -560,7 +560,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 485760644}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Look At
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -591,7 +591,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 622535376}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -631,7 +631,7 @@ GameObject:
   - component: {fileID: 628246689}
   - component: {fileID: 628246691}
   - component: {fileID: 628246690}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Hitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -872,7 +872,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 815374565}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: RightRopeHand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -906,7 +906,7 @@ GameObject:
   - component: {fileID: 832263458}
   - component: {fileID: 832263457}
   - component: {fileID: 832263456}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: LeftRope
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1093,7 +1093,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   loggingFilePath: C:\Users\Shaun\AppData\Roaming\DefaultCompany\HSSC-2\Logging\latest.log
-  populateNullValues: 1
+  populateNullValues: 0
 --- !u!114 &969153013
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1243,7 +1243,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1006594167}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: SleighIdealPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1394,7 +1394,7 @@ MonoBehaviour:
   forwardSpeed: 25
   lateralSpeed: 7.5
   verticalSpeed: 5
-  moveForward: 1
+  moveForward: 0
   minY: -0.5
   maxY: 40
   minZ: -23
@@ -1438,7 +1438,7 @@ GameObject:
   - component: {fileID: 1376607457}
   - component: {fileID: 1376607458}
   - component: {fileID: 1376607459}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Shooting Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1524,7 +1524,7 @@ GameObject:
   - component: {fileID: 1487745441}
   - component: {fileID: 1487745440}
   - component: {fileID: 1487745439}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: cm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1617,7 +1617,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1593039353}
   - component: {fileID: 1593039354}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Follow Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1873,7 +1873,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1658992892}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: LeftRopeHand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1907,7 +1907,7 @@ GameObject:
   - component: {fileID: 1662619382}
   - component: {fileID: 1662619381}
   - component: {fileID: 1662619380}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: RightRope
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2042,6 +2042,7 @@ MonoBehaviour:
   gifts:
   - {fileID: 7580893323699094945, guid: dc09148a91561fb4fb9c30930124f3e9, type: 3}
   - {fileID: 4828858995270217226, guid: d1e2f4ccd1c9ab14193541ae732772f0, type: 3}
+  - {fileID: 5333101258201772638, guid: dcfa16a24a894014898e75c673108de5, type: 3}
   spawnRegion: {fileID: 991288259}
   spawnInterval: 2
 --- !u!1 &1716165695
@@ -2085,7 +2086,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1732746624}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: RightRopeHook
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2118,7 +2119,7 @@ GameObject:
   - component: {fileID: 1782771619}
   - component: {fileID: 1782771618}
   - component: {fileID: 1782771617}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Reindeer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2206,7 +2207,7 @@ GameObject:
   - component: {fileID: 1784842065}
   - component: {fileID: 1784842064}
   - component: {fileID: 1784842063}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: cm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2521,7 +2522,7 @@ GameObject:
   - component: {fileID: 2071811340}
   - component: {fileID: 2071811339}
   - component: {fileID: 2071811341}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: SantaSleigh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2815,6 +2816,74 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1e2f4ccd1c9ab14193541ae732772f0, type: 3}
+--- !u!1001 &6153696826953659368
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5333101258201772638, guid: dcfa16a24a894014898e75c673108de5,
+        type: 3}
+      propertyPath: m_Name
+      value: Bomb Prot
+      objectReference: {fileID: 0}
+    - target: {fileID: 8780550483685768900, guid: dcfa16a24a894014898e75c673108de5,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.545
+      objectReference: {fileID: 0}
+    - target: {fileID: 8780550483685768900, guid: dcfa16a24a894014898e75c673108de5,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.77
+      objectReference: {fileID: 0}
+    - target: {fileID: 8780550483685768900, guid: dcfa16a24a894014898e75c673108de5,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8780550483685768900, guid: dcfa16a24a894014898e75c673108de5,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8780550483685768900, guid: dcfa16a24a894014898e75c673108de5,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8780550483685768900, guid: dcfa16a24a894014898e75c673108de5,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8780550483685768900, guid: dcfa16a24a894014898e75c673108de5,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8780550483685768900, guid: dcfa16a24a894014898e75c673108de5,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8780550483685768900, guid: dcfa16a24a894014898e75c673108de5,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8780550483685768900, guid: dcfa16a24a894014898e75c673108de5,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: dcfa16a24a894014898e75c673108de5, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -2825,5 +2894,6 @@ SceneRoots:
   - {fileID: 969153011}
   - {fileID: 2032973251115263095}
   - {fileID: 4619847848089666251}
+  - {fileID: 6153696826953659368}
   - {fileID: 2367518948719155611}
   - {fileID: 1716165696}
