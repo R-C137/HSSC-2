@@ -8,6 +8,7 @@
  * 
  * Changes: 
  *      [19/12/2023] - Initial implementation (C137)
+ *                   - Trap is now destroyed when it hits the grinch (C137)
  */
 using System.Collections;
 using UnityEngine;
@@ -72,6 +73,6 @@ public class TrapBehaviour : MonoBehaviour
     {
         transform.parent = Utility.singleton.grinch.transform;
 
-        LeanTween.moveLocal(gameObject, Vector3.zero, shootBackTime).setEase(LeanTweenType.easeInElastic);
+        LeanTween.moveLocal(gameObject, Vector3.zero, shootBackTime).setEase(LeanTweenType.easeInElastic).setDestroyOnComplete(true);
     }
 }
