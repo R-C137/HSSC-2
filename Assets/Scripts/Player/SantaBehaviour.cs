@@ -10,6 +10,7 @@
  *      [19/12/2023] - Initial implementation (C137)
  *                   - Made script a singleton (C137)
  *                   - Custom trap hitting (C137)
+ *                   - Added a debug for hitting the floor, to be replaced with game over menu or whatever other mechanic (Archetype)
  *                   
  *      [20/12/2023] - Natural obstacle handling (C137)
  */
@@ -74,6 +75,10 @@ public class SantaBehaviour : Singleton<SantaBehaviour>
         {
             Utility.singleton.giftCounter--;
             Destroy(other.gameObject);
+        }
+        if (other.CompareTag("Floor"))
+        {
+            Debug.Log("Ahh i hit the floor :(");
         }
     }
 }
