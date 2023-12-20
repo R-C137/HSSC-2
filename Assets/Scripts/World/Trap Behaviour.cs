@@ -11,6 +11,8 @@
  *                   - Trap is now destroyed when it hits the grinch (C137)
  *                   - Made functions overridable (C137)
  *                   - Custom behaviours when the player hits the trap (C137)
+ *      
+ *      [20/12/2023] - Traps are now thrown by only moving their X position (C137)
  */
 using System.Collections;
 using UnityEngine;
@@ -91,6 +93,6 @@ public class TrapBehaviour : MonoBehaviour
     {
         transform.parent = Utility.singleton.grinch.transform;
 
-        LeanTween.moveLocal(gameObject, Vector3.zero, shootBackTime).setEase(LeanTweenType.easeInElastic).setDestroyOnComplete(true);
+        LeanTween.moveLocalX(gameObject, 0, shootBackTime).setEase(LeanTweenType.easeInElastic).setDestroyOnComplete(true);
     }
 }
