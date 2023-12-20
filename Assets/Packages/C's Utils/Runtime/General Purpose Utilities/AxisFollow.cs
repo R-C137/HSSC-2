@@ -11,6 +11,7 @@
  * 
  * Changes: 
  *      [13/12/2023] - Initial implementation (C137)
+ *      
  *      [16/12/2023] - Fixed script name in the meta data (C137)
  *                   - Removed unnecessary using statements (C137)
  *      
@@ -18,6 +19,7 @@
  *                   - Fixed easing not following smoothing (C137)
  *                   
  *      [19/12/2023] - Changed the movemeant to run on FixedUpdate to make movemeant smoother (Archetype)
+ *      
  *      [20/12/2023] - Changed movemeant lerp to use deltaTime so it will slow down properly (Archetype)
  */
 using System;
@@ -73,6 +75,8 @@ public class AxisFollow : MonoBehaviour
     /// Internal reference to determine when the follow target has changed
     /// </summary>
     Transform _oldTarget;
+
+    public Transform closePosition, midPosition, farPosition;
 
     public void FixedUpdate()
     {
@@ -134,6 +138,30 @@ public class AxisFollow : MonoBehaviour
             easing.ClearKeys();
             easing.AddKey(0, smoothing);
             easing.AddKey(1, smoothing);
+        }
+    }
+
+    public void PlayerMovesForward()
+    {
+        if (target == farPosition)
+        {
+            target = midPosition;
+        }
+        else if (target == midPosition)
+        {
+            target = closePosition;
+        }
+    }
+
+    public void PlayerMovesBack()
+    {
+        if (target == closePosition)
+        {
+            target = midPosition;
+        }
+        else if (target == midPosition)
+        {
+            target = farPosition;
         }
     }
 }

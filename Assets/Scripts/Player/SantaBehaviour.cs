@@ -70,15 +70,23 @@ public class SantaBehaviour : Singleton<SantaBehaviour>
         if (other.CompareTag("Trap"))
         {
             other.GetComponent<TrapBehaviour>().TrapHit();
+            GrinchBehaviour.singleton.followScript.PlayerMovesBack();
         }
         if(other.CompareTag("Natural Obstacle"))
         {
             Utility.singleton.giftCounter--;
             Destroy(other.gameObject);
+            GrinchBehaviour.singleton.followScript.PlayerMovesBack();
         }
         if (other.CompareTag("Floor"))
         {
             Debug.Log("Ahh i hit the floor :(");
+            GrinchBehaviour.singleton.followScript.PlayerMovesBack();
+        }
+        if (other.CompareTag("Candy Cane"))
+        {
+            Destroy(other.gameObject);
+            GrinchBehaviour.singleton.followScript.PlayerMovesForward();
         }
     }
 }
