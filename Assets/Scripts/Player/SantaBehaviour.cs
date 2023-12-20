@@ -13,6 +13,7 @@
  *                   - Added a debug for hitting the floor, to be replaced with game over menu or whatever other mechanic (Archetype)
  *                   
  *      [20/12/2023] - Natural obstacle handling (C137)
+ *                   - Added behaviour for changing distance to the grinch and candy cane (speed boost) (Archetype)
  */
 using CsUtils;
 using CsUtils.Systems.Logging;

@@ -21,6 +21,7 @@
  *      [19/12/2023] - Changed the movemeant to run on FixedUpdate to make movemeant smoother (Archetype)
  *      
  *      [20/12/2023] - Changed movemeant lerp to use deltaTime so it will slow down properly (Archetype)
+ *                   - Added functions for changing distance to player (Archetype)
  */
 using System;
 using UnityEngine;
@@ -76,6 +77,14 @@ public class AxisFollow : MonoBehaviour
     /// </summary>
     Transform _oldTarget;
 
+    /// <summary>
+    /// SFX for getting speed bosts and damage script
+    /// </summary>
+    public SpeedEffects speedEffects;
+
+    /// <summary>
+    /// Positions representing how close the player is to the grinch
+    /// </summary>
     public Transform closePosition, midPosition, farPosition;
 
     public void FixedUpdate()
@@ -143,24 +152,32 @@ public class AxisFollow : MonoBehaviour
 
     public void PlayerMovesForward()
     {
+        speedEffects.ZoomSpeed();
+
         if (target == farPosition)
         {
+            GrinchBehaviour.singleton.spawnInterval = 2;
             target = midPosition;
         }
         else if (target == midPosition)
         {
+            GrinchBehaviour.singleton.spawnInterval = 3;
             target = closePosition;
         }
     }
 
     public void PlayerMovesBack()
     {
+        speedEffects.TriggerScreenShake();
+
         if (target == closePosition)
         {
+            GrinchBehaviour.singleton.spawnInterval = 2;
             target = midPosition;
         }
         else if (target == midPosition)
         {
+            GrinchBehaviour.singleton.spawnInterval = 1;
             target = farPosition;
         }
     }
