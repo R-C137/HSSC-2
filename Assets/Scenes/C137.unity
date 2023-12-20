@@ -4256,7 +4256,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetToMoveTowards: {fileID: 1006594167}
-  Reindeer: {fileID: 0}
+  Reindeer: {fileID: 1782771619}
   moveSpeed: 8
 --- !u!222 &1178362657073719363
 CanvasRenderer:
