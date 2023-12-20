@@ -15,6 +15,7 @@
  *      [20/12/2023] - Code review (C137)
  *                   - Improved grinch retreat animation (C137)
  *                   - Trap and gift spawning are now separate (C137)
+ *                   - Added smoke particle effect when hit (Archetype)
  */
 using CsUtils;
 using CsUtils.Extensions;
@@ -88,6 +89,11 @@ public class GrinchBehaviour : Singleton<GrinchBehaviour>
     /// </summary>
     Transform defaultParent;
 
+    /// <summary>
+    /// Smoke particle effect prefab
+    /// </summary>
+    public GameObject smokePoof;
+
     private void Start()
     {
         startingLives = retreatHits;
@@ -119,8 +125,10 @@ public class GrinchBehaviour : Singleton<GrinchBehaviour>
     {
         retreatHits--;
 
+        Instantiate(smokePoof, followScript.gameObject.transform);
+
         if (retreatHits != 0)
-            return; 
+            return;
 
         for (int i = 0; i < 8; i++)
         {
@@ -155,7 +163,5 @@ public class GrinchBehaviour : Singleton<GrinchBehaviour>
         spawnObjects = true;
 
         retreatHits = startingLives;
-
-
     }
 }

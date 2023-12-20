@@ -391,7 +391,7 @@ MonoBehaviour:
   m_BlendUpdateMethod: 1
   m_DefaultBlend:
     m_Style: 1
-    m_Time: 2
+    m_Time: 1
     m_CustomCurve:
       serializedVersion: 2
       m_Curve: []
@@ -3615,6 +3615,8 @@ MonoBehaviour:
   recoverTime: 5
   retreatTime: 5
   retreatDelay: 1.5
+  smokePoof: {fileID: 8386051941984236419, guid: 30ee031649139a04295fa96156f0cd22,
+    type: 3}
 --- !u!1 &1716165695
 GameObject:
   m_ObjectHideFlags: 0

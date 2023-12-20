@@ -18,6 +18,7 @@
  *                   - Fixed easing not following smoothing (C137)
  *                   
  *      [19/12/2023] - Changed the movemeant to run on FixedUpdate to make movemeant smoother (Archetype)
+ *      [20/12/2023] - Changed movemeant lerp to use deltaTime so it will slow down properly (Archetype)
  */
 using System;
 using UnityEngine;
@@ -92,7 +93,7 @@ public class AxisFollow : MonoBehaviour
         if (axes.followZ)
             pos.z = target.position.z + offset.z;
 
-        transform.position = Vector3.Lerp(transform.position, pos, easing.Evaluate(smoothing));
+        transform.position = Vector3.Lerp(transform.position, pos, easing.Evaluate(smoothing) * Time.timeScale);
     }
 
     /// <summary>
