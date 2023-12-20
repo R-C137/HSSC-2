@@ -44,7 +44,6 @@ public class Bomb : TrapBehaviour
             SantaBehaviour.singleton.lives--;
 
             Logging.singleton.Log("Santa has hit an activated bomb and has been damaged", LogSeverity.Info);
-            
         }
         Destroy(gameObject);
     }
