@@ -17,7 +17,7 @@ using UnityEngine;
 public class ProjectileBehaviour : MonoBehaviour
 {
     /// <summary>
-    /// self explanatory
+    /// How long it takes for the projectile to disappear
     /// </summary>
     public float lifeSpan = 10;
 
@@ -42,11 +42,6 @@ public class ProjectileBehaviour : MonoBehaviour
         if (other.CompareTag("Trap"))
         {
             other.GetComponent<TrapBehaviour>().TrapShot();
-            Destroy(gameObject);
-        }
-        if (other.CompareTag("Grinch"))
-        {
-            other.GetComponentInParent<GrinchBehaviour>().GetShot();
             Destroy(gameObject);
         }
         if (other.CompareTag("Delivery"))

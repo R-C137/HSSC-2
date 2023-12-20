@@ -13,6 +13,7 @@
  *                   - Custom behaviours when the player hits the trap (C137)
  *      
  *      [20/12/2023] - Traps are now thrown by only moving their X position (C137)
+ *                   - Grinch now gets affected by thrown back traps (C137)
  */
 using System.Collections;
 using UnityEngine;
@@ -93,6 +94,10 @@ public class TrapBehaviour : MonoBehaviour
     {
         transform.parent = Utility.singleton.grinch.transform;
 
-        LeanTween.moveLocalX(gameObject, 0, shootBackTime).setEase(LeanTweenType.easeInElastic).setDestroyOnComplete(true);
+        LeanTween.moveLocalX(gameObject, 0, shootBackTime).setEase(LeanTweenType.easeInElastic).setOnComplete(() =>
+        {
+            GrinchBehaviour.singleton.GrinchHit();
+            Destroy(gameObject);
+        });
     }
 }

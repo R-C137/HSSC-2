@@ -65,7 +65,7 @@ public class Utility : Singleton<Utility>
         SantaBehaviour.singleton.shooting.canMoveCamera = false;
         SantaBehaviour.singleton.shooting.canShoot = false;
         SantaBehaviour.singleton.shooting.shootingCamera.Priority = 1;
-        GrinchBehaviour.singleton.spawnGifts = false;
+        GrinchBehaviour.singleton.spawnObjects = false;
         PlayerMovement.singleton.doMovement = false;
 
         gameOverCanvas.SetActive(true);

@@ -123,6 +123,83 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &5509955
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5509956}
+  - component: {fileID: 5509957}
+  m_Layer: 3
+  m_Name: Grinch Retreat Position
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5509956
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5509955}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 70.66, y: 108.3, z: -84.3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1685076872}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5509957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5509955}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90300e9c8a6638543a236cdea0cb8e4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 1782771619}
+  smoothing: 1
+  easing:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  offset: {x: 69.87, y: 100.23, z: -84.3}
+  axes:
+    followX: 1
+    followY: 0
+    followZ: 0
+  autoOffset: 0
+  useEasing: 0
 --- !u!1 &244867299
 GameObject:
   m_ObjectHideFlags: 0
@@ -3509,6 +3586,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1815759668}
+  - {fileID: 5509956}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1685076873
@@ -3525,11 +3603,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gifts:
   - {fileID: 7580893323699094945, guid: dc09148a91561fb4fb9c30930124f3e9, type: 3}
+  traps:
   - {fileID: 4828858995270217226, guid: d1e2f4ccd1c9ab14193541ae732772f0, type: 3}
   - {fileID: 5333101258201772638, guid: dcfa16a24a894014898e75c673108de5, type: 3}
+  followScript: {fileID: 1815759669}
   spawnRegion: {fileID: 991288259}
+  retreatPosition: {fileID: 5509956}
   spawnInterval: 2
-  spawnGifts: 1
+  spawnObjects: 1
+  retreatHits: 1
+  recoverTime: 5
+  retreatTime: 5
+  retreatDelay: 1.5
 --- !u!1 &1716165695
 GameObject:
   m_ObjectHideFlags: 0
@@ -4171,7 +4256,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetToMoveTowards: {fileID: 1006594167}
-  sleigh: {fileID: 0}
+  Reindeer: {fileID: 0}
   moveSpeed: 8
 --- !u!222 &1178362657073719363
 CanvasRenderer:
