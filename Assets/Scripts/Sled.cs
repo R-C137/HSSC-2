@@ -21,7 +21,7 @@ public class Sled : MonoBehaviour
     /// <summary>
     /// The point to always point at
     /// </summary>
-    public Transform sleigh;
+    public Transform Reindeer;
 
     /// <summary>
     /// Lerp speed
@@ -37,9 +37,9 @@ public class Sled : MonoBehaviour
         }
 
         // Look at the sleigh
-        if (sleigh != null)
+        if (Reindeer != null)
         {
-            transform.LookAt(sleigh);
+            transform.LookAt(Reindeer);
         }
     }
 }

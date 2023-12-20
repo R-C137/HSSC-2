@@ -16,6 +16,8 @@
  *      
  *      [18/12/2023] - Fixed animation curve being null on Reset() (C137)
  *                   - Fixed easing not following smoothing (C137)
+ *                   
+ *      [19/12/2023] - Changed the movemeant to run on FixedUpdate to make movemeant smoother (Archetype)
  */
 using System;
 using UnityEngine;
@@ -71,7 +73,7 @@ public class AxisFollow : MonoBehaviour
     /// </summary>
     Transform _oldTarget;
 
-    public void Update()
+    public void FixedUpdate()
     {
         FollowTarget();
     }

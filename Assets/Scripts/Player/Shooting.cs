@@ -12,10 +12,9 @@
  *                   - Moved gift counting and display to Utility script (C137)
  */
 using Cinemachine;
-using System;
 using UnityEngine;
 
-[Serializable]
+[System.Serializable]
 public struct ShootingControls
 {
     /// <summary>
@@ -35,6 +34,16 @@ public class Shooting : MonoBehaviour
     /// The different shooting controls
     /// </summary>
     public ShootingControls controls;
+
+    /// <summary>
+    /// The different SFX to play when a gift is thrown
+    /// </summary>
+    public AudioClip[] throwSFX;
+
+    /// <summary>
+    /// The audio source used to play the SFX
+    /// </summary>
+    public AudioSource audioSource;
 
     /// <summary>
     /// The camera handling the shooting
@@ -174,15 +183,17 @@ public class Shooting : MonoBehaviour
             return;
 
         GameObject obj = Instantiate(projectile);
-
         obj.transform.position = shootingCamera.transform.position;
 
         Rigidbody rb = obj.GetComponent<Rigidbody>();
-
         rb.AddForce(shootingCamera.transform.forward * projectileSpeed, ForceMode.VelocityChange);
 
         canShoot = false;
         Utility.singleton.giftCounter--;
+
+        //Play SFX
+        audioSource.clip = throwSFX[Random.Range(0, throwSFX.Length)];
+        audioSource.Play();
 
         LeanTween.delayedCall(shootingInterval, () => canShoot = true).setIgnoreTimeScale(true);
     }

@@ -8,6 +8,7 @@ TagManager:
   - Gift
   - Trap
   - Delivery
+  - Natural Obstacle
   layers:
   - Default
   - TransparentFX
