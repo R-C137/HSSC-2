@@ -9,12 +9,13 @@
  * Changes: 
  *      [19/12/2023] - Initial implementation (C137)
  *                   - Moved gift counting and display to Utility script (C137)
+ *     
+ *      [21/12/2023] - Camera effect support (C137)
  */
+using Cinemachine;
 using CsUtils;
-using CsUtils.Systems.Logging;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Utility : Singleton<Utility>
 {
@@ -22,6 +23,11 @@ public class Utility : Singleton<Utility>
     /// Class handling the scene loading animation
     /// </summary>
     public SceneLoader sceneLoader;
+
+    /// <summary>
+    /// Reference to the cinemachine brain of the scene
+    /// </summary>
+    public CinemachineBrain cinemachineBrain;
 
     /// <summary>
     /// The shower for the gift counter
@@ -49,6 +55,21 @@ public class Utility : Singleton<Utility>
     /// <param name="giftCounter">The current value of the gift counter</param>
     public delegate void GiftDelivery(ref int giftCounter);
     public event GiftDelivery onGiftDelivered;
+
+    /// <summary>
+    /// The id of the tween handling the camera shake
+    /// </summary>
+    int cameraShakeTweenID;
+
+    /// <summary>
+    /// The id of the tween handling the fov change
+    /// </summary>
+    int fovChangeTweenID;
+
+    /// <summary>
+    /// The id of the tween handling the fov change back
+    /// </summary>
+    int fovChangeBackTwwen;
 
     private void Update()
     {
@@ -85,5 +106,48 @@ public class Utility : Singleton<Utility>
     public void Restart()
     {
         sceneLoader.LoadScene(1);
+    }
+
+    /// <summary>
+    /// Shakes the camera
+    /// </summary>
+    /// <param name="intensity">How intensely the camera should shake</param>
+    /// <param name="time">How long should the shaking last</param>
+    public void ShakeCamera(float intensity = 5f, float time = 1f)
+    {
+        LeanTween.cancel(cameraShakeTweenID);
+
+        var perlin = (cinemachineBrain.ActiveVirtualCamera as CinemachineVirtualCamera).GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+
+        cameraShakeTweenID = LeanTween.value(intensity, 0, time)
+            .setOnUpdate((v) => perlin.m_AmplitudeGain = v).uniqueId;
+        
+    }
+
+    /// <summary>
+    /// Changes the FOV of the active camera to a set value
+    /// </summary>
+    /// <param name="fov">The fov to set the camera to</param>
+    /// <param name="time">How long it takes for the fov to change</param>
+    /// <param name="stayTime">How long should the new fov remain before changing back to its original value</param>
+    /// <param name="changeBackTime">How long it takes for the fov to change back to its original value</param>
+    public void ChangeFOV(float fov, float time, float stayTime, float changeBackTime = 0)
+    {
+        changeBackTime = changeBackTime == 0 ? time : changeBackTime;
+
+        LeanTween.cancel(fovChangeTweenID);
+
+        float startingFOV = (cinemachineBrain.ActiveVirtualCamera as CinemachineVirtualCamera).m_Lens.FieldOfView;
+
+        fovChangeTweenID = LeanTween.value(startingFOV, fov, time)
+                 .setOnUpdate(v => (cinemachineBrain.ActiveVirtualCamera as CinemachineVirtualCamera).m_Lens.FieldOfView = v)
+                 .setOnComplete(() =>
+                 {
+                     LeanTween.cancel(fovChangeBackTwwen);
+
+                     fovChangeBackTwwen = LeanTween.value(fov, startingFOV, changeBackTime)
+                              .setDelay(stayTime)
+                              .setOnUpdate(v => (cinemachineBrain.ActiveVirtualCamera as CinemachineVirtualCamera).m_Lens.FieldOfView = v).uniqueId;
+                 }).uniqueId;
     }
 }

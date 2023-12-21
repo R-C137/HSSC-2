@@ -150,13 +150,16 @@ public class Shooting : MonoBehaviour
     void HandleCameraRotation()
     {
         if (Input.GetKeyDown(controls.aim))
+        {
             shootingCamera.Priority = 5;
+            //Cursor.lockState = CursorLockMode.Confined;
+        }
 
         if (Input.GetKeyUp(controls.aim))
         {
             shootingCamera.Priority = 1;
             canMoveCamera = false;
-
+            
             ResetTimescale();
         }
 
