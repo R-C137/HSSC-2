@@ -9,6 +9,8 @@ TagManager:
   - Trap
   - Delivery
   - Natural Obstacle
+  - Floor
+  - Candy Cane
   layers:
   - Default
   - TransparentFX

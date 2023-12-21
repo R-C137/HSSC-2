@@ -13,6 +13,10 @@
  *                   - Added a debug for hitting the floor, to be replaced with game over menu or whatever other mechanic (Archetype)
  *                   
  *      [20/12/2023] - Natural obstacle handling (C137)
+ *                   - Added behaviour for changing distance to the grinch and candy cane (speed boost) (Archetype)
+ *                   
+ *      [21/12/2023] - Code review (C137)
+ *                   - Camera shake is now also done for obstacle collisions (C137)
  */
 using CsUtils;
 using CsUtils.Systems.Logging;
@@ -70,15 +74,27 @@ public class SantaBehaviour : Singleton<SantaBehaviour>
         if (other.CompareTag("Trap"))
         {
             other.GetComponent<TrapBehaviour>().TrapHit();
+            GrinchPositionalHandling.singleton.MoveFurther();
+
+            Utility.singleton.ShakeCamera(5f, 1f);
         }
         if(other.CompareTag("Natural Obstacle"))
         {
             Utility.singleton.giftCounter--;
             Destroy(other.gameObject);
+            GrinchPositionalHandling.singleton.MoveFurther();
+
+            Utility.singleton.ShakeCamera(5f, 1f);
         }
         if (other.CompareTag("Floor"))
         {
             Debug.Log("Ahh i hit the floor :(");
+            GrinchPositionalHandling.singleton.MoveFurther();
+        }
+        if (other.CompareTag("Candy Cane"))
+        {
+            GrinchPositionalHandling.singleton.MoveCloser();
+            Destroy(other.gameObject);
         }
     }
 }

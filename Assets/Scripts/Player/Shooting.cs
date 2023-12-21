@@ -10,6 +10,8 @@
  *      [19/12/2023] - Initial implementation (C137)
  *                   - Made ResetTimescale() a public function (C137)
  *                   - Moved gift counting and display to Utility script (C137)
+ *                   
+ *      [21/12/2023] - Added support for new SFX handling system (C137)
  */
 using Cinemachine;
 using UnityEngine;
@@ -34,11 +36,6 @@ public class Shooting : MonoBehaviour
     /// The different shooting controls
     /// </summary>
     public ShootingControls controls;
-
-    /// <summary>
-    /// The different SFX to play when a gift is thrown
-    /// </summary>
-    public AudioClip[] throwSFX;
 
     /// <summary>
     /// The audio source used to play the SFX
@@ -150,13 +147,16 @@ public class Shooting : MonoBehaviour
     void HandleCameraRotation()
     {
         if (Input.GetKeyDown(controls.aim))
+        {
             shootingCamera.Priority = 5;
+            //Cursor.lockState = CursorLockMode.Confined;
+        }
 
         if (Input.GetKeyUp(controls.aim))
         {
             shootingCamera.Priority = 1;
             canMoveCamera = false;
-
+            
             ResetTimescale();
         }
 
@@ -192,7 +192,7 @@ public class Shooting : MonoBehaviour
         Utility.singleton.giftCounter--;
 
         //Play SFX
-        audioSource.clip = throwSFX[Random.Range(0, throwSFX.Length)];
+        audioSource.clip = Utility.singleton.commonSFX.projectileShoot[Random.Range(0, Utility.singleton.commonSFX.projectileShoot.Length)];
         audioSource.Play();
 
         LeanTween.delayedCall(shootingInterval, () => canShoot = true).setIgnoreTimeScale(true);
