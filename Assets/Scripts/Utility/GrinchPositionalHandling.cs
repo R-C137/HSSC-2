@@ -8,6 +8,7 @@
  * 
  * Changes: 
  *      [21/12/2023] - Initial implementation (C137)
+ *                   - Starting position is now done in editor (C137)
  */
 using CsUtils;
 using System;
@@ -66,8 +67,17 @@ public class GrinchPositionalHandling : Singleton<GrinchPositionalHandling>
 
     private void Start()
     {
+        defaultParent = grinchFollow.transform.parent;
+        
+    }
+
+    [ContextMenu("Set Starting position")]
+    private void SetStartingPosition()
+    {
         //Position needs to be set on the next frame or the movement will be weird for some reason
-        LeanTween.delayedCall(0f, () => SetPosition(positions[currentPosition]));
+        //LeanTween.delayedCall(0f, () => SetPosition(positions[currentPosition]));
+        grinchFollow.transform.position = positions[currentPosition].position.position;
+        grinchFollow.offset = (grinchFollow.transform.position - grinchFollow.target.position).normalized * Vector3.Distance(grinchFollow.target.position, grinchFollow.transform.position);
     }
 
     [ContextMenu("Move Further")]
@@ -96,7 +106,6 @@ public class GrinchPositionalHandling : Singleton<GrinchPositionalHandling>
     {
         grinchFollow.enabled = false;
 
-        defaultParent = grinchFollow.transform.parent;
         grinchFollow.transform.parent = position.position;
 
         LeanTween.cancel(positionalChangeTween, false);

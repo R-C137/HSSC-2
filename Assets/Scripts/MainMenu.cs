@@ -8,6 +8,7 @@
  * 
  * Changes: 
  *      [18/12/2023] - Initial implementation (C137)
+ *      [21/12/2023] - Added exit button functionality (C137)
  */
 using System.Collections;
 using System.Collections.Generic;
@@ -41,6 +42,6 @@ public class MainMenu : MonoBehaviour
     /// </summary>
     public void Exit()
     {
-
+        Application.Quit();
     }
 }

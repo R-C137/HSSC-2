@@ -12,6 +12,7 @@
  *     
  *      [21/12/2023] - Camera effect support (C137)
  *                   - Added references to commonly used SFX (C137)
+ *                   - Cursor lock key bind (C137)
  */
 using Cinemachine;
 using CsUtils;
@@ -98,9 +99,17 @@ public class Utility : Singleton<Utility>
     /// </summary>
     int fovChangeBackTwwen;
 
+    private void Start()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
     private void Update()
     {
         giftCounterShower.text = $"Gifts: {giftCounter}";
+
+        if (Input.GetKeyDown(KeyCode.F11))
+            Cursor.lockState = Cursor.lockState == CursorLockMode.Locked ? CursorLockMode.None : CursorLockMode.Locked;
     }
 
     /// <summary>

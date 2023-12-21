@@ -17,6 +17,7 @@
  *                   
  *      [21/12/2023] - Code review (C137)
  *                   - Camera shake is now also done for obstacle collisions (C137)
+ *                   - Gift counter now no longer goes below 0 (C137)
  */
 using CsUtils;
 using CsUtils.Systems.Logging;
@@ -80,7 +81,7 @@ public class SantaBehaviour : Singleton<SantaBehaviour>
         }
         if(other.CompareTag("Natural Obstacle"))
         {
-            Utility.singleton.giftCounter--;
+            Utility.singleton.giftCounter = Mathf.Max(0, Utility.singleton.giftCounter - 1);
             Destroy(other.gameObject);
             GrinchPositionalHandling.singleton.MoveFurther();
 
