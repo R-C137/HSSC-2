@@ -8,9 +8,9 @@
  * 
  * Changes: 
  *      [20/12/2023] - Initial implementation (C137)
+ *      [21/12/2023] - Added support for new SFX handling system (C137)
+ *                   - Removed unnecessary using statements (C137)
  */
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -23,25 +23,15 @@ public class UISFX : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler
     /// </summary>
     public AudioSource audioSource;
 
-    /// <summary>
-    /// The SFX to be played on hover
-    /// </summary>
-    public AudioClip hoverSFX;
-
-    /// <summary>
-    /// The SFX to be played on click
-    /// </summary>
-    public AudioClip clickSFX;
-
     public void OnPointerEnter(PointerEventData eventData)
     {
-        audioSource.clip = hoverSFX;
+        audioSource.clip = Utility.singleton.commonSFX.UIHover;
         audioSource.Play();
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        audioSource.clip = clickSFX;
+        audioSource.clip = Utility.singleton.commonSFX.UIClick;
         audioSource.Play();
     }
 

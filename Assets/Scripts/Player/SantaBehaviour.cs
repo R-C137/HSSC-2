@@ -14,6 +14,9 @@
  *                   
  *      [20/12/2023] - Natural obstacle handling (C137)
  *                   - Added behaviour for changing distance to the grinch and candy cane (speed boost) (Archetype)
+ *                   
+ *      [21/12/2023] - Code review (C137)
+ *                   - Camera shake is now also done for obstacle collisions (C137)
  */
 using CsUtils;
 using CsUtils.Systems.Logging;
@@ -80,6 +83,8 @@ public class SantaBehaviour : Singleton<SantaBehaviour>
             Utility.singleton.giftCounter--;
             Destroy(other.gameObject);
             GrinchPositionalHandling.singleton.MoveFurther();
+
+            Utility.singleton.ShakeCamera(5f, 1f);
         }
         if (other.CompareTag("Floor"))
         {

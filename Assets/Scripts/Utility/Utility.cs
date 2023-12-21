@@ -11,14 +11,41 @@
  *                   - Moved gift counting and display to Utility script (C137)
  *     
  *      [21/12/2023] - Camera effect support (C137)
+ *                   - Added references to commonly used SFX (C137)
  */
 using Cinemachine;
 using CsUtils;
+using System;
 using TMPro;
 using UnityEngine;
 
+[Serializable]
+public struct CommonSFX
+{
+    /// <summary>
+    /// SFX played when a clickable UI element is hovered
+    /// </summary>
+    public AudioClip UIHover;
+
+    /// <summary>
+    /// SFX played when a UI element is clicked
+    /// </summary>
+    public AudioClip UIClick;
+
+    /// <summary>
+    /// The different SFXs to play when a projectile is shot
+    /// </summary>
+    public AudioClip[] projectileShoot;
+
+}
+
 public class Utility : Singleton<Utility>
 {
+    /// <summary>
+    /// Reference to common SFXs used
+    /// </summary>
+    public CommonSFX commonSFX;
+
     /// <summary>
     /// Class handling the scene loading animation
     /// </summary>
