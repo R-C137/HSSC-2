@@ -152,7 +152,7 @@ public class Shooting : MonoBehaviour
         if (Input.GetKeyDown(controls.aim))
         {
             shootingCamera.Priority = 5;
-            Cursor.lockState = CursorLockMode.Confined;
+            //Cursor.lockState = CursorLockMode.Confined;
         }
 
         if (Input.GetKeyUp(controls.aim))

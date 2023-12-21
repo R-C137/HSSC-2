@@ -12,6 +12,8 @@
  *      
  *      [19/12/2023] - Added a boolean to disable movement (C137)
  *                   - Made class a singleton (C137)
+ *                   
+ *      [21/12/2023] - Vertical movement decay is now optional (C137)
  */
 using CsUtils;
 using UnityEngine;
@@ -68,6 +70,11 @@ public class PlayerMovement : Singleton<PlayerMovement>
     public bool moveForward = true;
 
     /// <summary>
+    /// Whether to decay the vertical positioning of the player
+    /// </summary>
+    public bool doVerticalDecay;
+
+    /// <summary>
     /// Whether to do any movement at all
     /// </summary>
     public bool doMovement = true;
@@ -106,7 +113,7 @@ public class PlayerMovement : Singleton<PlayerMovement>
 
         if (Input.GetKey(controls.up))
             pos.y += verticalSpeed * Time.deltaTime;
-        else
+        else if (doVerticalDecay)
             pos.y -= verticalSpeed * Time.deltaTime;
 
         if (Input.GetKey(controls.right))

@@ -22,6 +22,9 @@
  *      
  *      [20/12/2023] - Changed movemeant lerp to use deltaTime so it will slow down properly (Archetype)
  *                   - Added functions for changing distance to player (Archetype)
+ *                   
+ *      [21/12/2023] - Smoothing is now done per axis (C137)
+ *                   - Reverted changes 1,2 (20/12/2023)
  */
 using System;
 using UnityEngine;
@@ -33,6 +36,15 @@ public struct FollowAxes
     /// Which of the axes to follow
     /// </summary>
     public bool followX, followY, followZ;
+}
+
+[Serializable]
+public struct SmoothingAxes
+{
+    /// <summary>
+    /// Which of the axes to apply smoothing on
+    /// </summary>
+    public bool smoothX, smoothY, smoothZ;
 }
 
 public class AxisFollow : MonoBehaviour
@@ -63,6 +75,11 @@ public class AxisFollow : MonoBehaviour
     public FollowAxes axes;
 
     /// <summary>
+    /// The axes to apply smoothing on
+    /// </summary>
+    public SmoothingAxes smoothAxes;
+
+    /// <summary>
     /// Whether to automatically set the offset when a new target is added
     /// </summary>
     public bool autoOffset = true;
@@ -76,16 +93,6 @@ public class AxisFollow : MonoBehaviour
     /// Internal reference to determine when the follow target has changed
     /// </summary>
     Transform _oldTarget;
-
-    /// <summary>
-    /// SFX for getting speed bosts and damage script
-    /// </summary>
-    public SpeedEffects speedEffects;
-
-    /// <summary>
-    /// Positions representing how close the player is to the grinch
-    /// </summary>
-    public Transform closePosition, midPosition, farPosition;
 
     public void FixedUpdate()
     {
@@ -106,7 +113,12 @@ public class AxisFollow : MonoBehaviour
         if (axes.followZ)
             pos.z = target.position.z + offset.z;
 
-        transform.position = Vector3.Lerp(transform.position, pos, easing.Evaluate(smoothing) * Time.timeScale);
+        transform.position = new Vector3(
+            smoothAxes.smoothX ? Mathf.Lerp(transform.position.x, pos.x, easing.Evaluate(smoothing) * Time.timeScale) : pos.x,
+            smoothAxes.smoothY ? Mathf.Lerp(transform.position.y, pos.y, easing.Evaluate(smoothing) * Time.timeScale) : pos.y,
+            smoothAxes.smoothZ ? Mathf.Lerp(transform.position.z, pos.z, easing.Evaluate(smoothing) * Time.timeScale) : pos.z);
+
+        //transform.position = Vector3.Lerp(transform.position, pos, easing.Evaluate(smoothing) * Time.timeScale);
     }
 
     /// <summary>
@@ -147,38 +159,6 @@ public class AxisFollow : MonoBehaviour
             easing.ClearKeys();
             easing.AddKey(0, smoothing);
             easing.AddKey(1, smoothing);
-        }
-    }
-
-    public void PlayerMovesForward()
-    {
-        speedEffects.ZoomSpeed();
-
-        if (target == farPosition)
-        {
-            GrinchBehaviour.singleton.spawnInterval = 2;
-            target = midPosition;
-        }
-        else if (target == midPosition)
-        {
-            GrinchBehaviour.singleton.spawnInterval = 3;
-            target = closePosition;
-        }
-    }
-
-    public void PlayerMovesBack()
-    {
-        speedEffects.TriggerScreenShake();
-
-        if (target == closePosition)
-        {
-            GrinchBehaviour.singleton.spawnInterval = 2;
-            target = midPosition;
-        }
-        else if (target == midPosition)
-        {
-            GrinchBehaviour.singleton.spawnInterval = 1;
-            target = farPosition;
         }
     }
 }
