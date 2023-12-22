@@ -8,9 +8,9 @@
  * 
  * Changes: 
  *      [18/12/2023] - Initial implementation (C137)
+ *      [21/12/2023] - Added exit button functionality (C137)
+ *      [22/12/2023] - Removed settings handling (C137)
  */
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MainMenu : MonoBehaviour
@@ -29,18 +29,10 @@ public class MainMenu : MonoBehaviour
     }
 
     /// <summary>
-    /// Called when the settings button is pressed
-    /// </summary>
-    public void Settings()
-    {
-
-    }
-
-    /// <summary>
     /// Called when the exit button is pressed
     /// </summary>
     public void Exit()
     {
-
+        Application.Quit();
     }
 }

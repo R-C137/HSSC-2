@@ -12,6 +12,8 @@
  *                   - Moved gift counting and display to Utility script (C137)
  *                   
  *      [21/12/2023] - Added support for new SFX handling system (C137)
+ *      
+ *      [22/12/2023] - Game pausing support (C137)
  */
 using Cinemachine;
 using UnityEngine;
@@ -115,18 +117,35 @@ public class Shooting : MonoBehaviour
     private void Start()
     {
         blendHandler.onBlendFinished += BlendFinished;
+        Utility.singleton.onGamePaused += HandlePausing;
+
         normalFixedDeltatime = Time.fixedDeltaTime;
+    }
+
+    private void HandlePausing(bool doPausing)
+    {
+        ResetTimescale();
+        canMoveCamera = !doPausing;
+        canShoot = !doPausing;
     }
 
     private void BlendFinished(CinemachineVirtualCameraBase cam)
     {
+        if (Utility.singleton.isPaused)
+            return;
+
         canMoveCamera = true;
         Time.timeScale = aimingTimescale;
         Time.fixedDeltaTime *= aimingTimescale;
 
         LeanTween.cancel(timescaleTweenID);
 
-        timescaleTweenID = LeanTween.delayedCall(aimingTimescaleMaxTime, ResetTimescale).setIgnoreTimeScale(true).uniqueId;
+        timescaleTweenID = LeanTween.delayedCall(aimingTimescaleMaxTime, () => 
+        { 
+            if (!Utility.singleton.isPaused)
+                ResetTimescale(); 
+
+        }).setIgnoreTimeScale(true).uniqueId;
     }
 
     /// <summary>
@@ -140,6 +159,9 @@ public class Shooting : MonoBehaviour
 
     private void Update()
     {
+        if (Utility.singleton.isPaused)
+            return;
+
         HandleCameraRotation();
         HandleShooting();
     }

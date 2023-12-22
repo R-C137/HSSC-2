@@ -1,16 +1,18 @@
 /* Rope.cs - HSSC-2
  * 
  * Creation Date: 18/12/2023
- * Authors: Archetype
+ * Authors: Archetype, C137
  * Original: Archetype
  * 
- * Edited By: Archetype
+ * Edited By: Archetype, C137
  * 
  * Changes: 
  *      [18/12/2023] - Initial implementation (Archetype)
+ *      [21/12/2023] - Rope behaviour now also works in the Editor (C137)
  */
 using UnityEngine;
 
+[ExecuteAlways]
 public class Rope : MonoBehaviour
 {
     /// <summary>

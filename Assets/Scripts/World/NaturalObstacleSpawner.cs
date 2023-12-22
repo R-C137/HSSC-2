@@ -8,7 +8,10 @@
  * 
  * Changes: 
  *      [20/12/2023] - Initial implementation (C137)
+ *
+ *      [22/12/2023] - Game pausing support (C137)
  */
+using CsUtils;
 using CsUtils.Extensions;
 using System.Collections;
 using UnityEngine;
@@ -49,7 +52,27 @@ public class NaturalObstacleSpawner: MonoBehaviour
     /// </summary>
     public bool canSpawnObstacles = true;
 
-    IEnumerator Start()
+    /// <summary>
+    /// The coroutine used to spawn objects
+    /// </summary>
+    Coroutine spawnObjectsCoroutine;
+
+    void Start()
+    {
+        spawnObjectsCoroutine = StartCoroutine(SpawnObjects());
+
+        Utility.singleton.onGamePaused += HandlePausing;
+    }
+
+    private void HandlePausing(bool doPausing)
+    {
+        if (doPausing)
+            StopCoroutine(spawnObjectsCoroutine);
+        else
+            spawnObjectsCoroutine = StartCoroutine(SpawnObjects());
+    }
+
+    IEnumerator SpawnObjects()
     {
         while (true)
         {

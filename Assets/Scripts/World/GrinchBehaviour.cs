@@ -16,6 +16,8 @@
  *                   - Improved grinch retreat animation (C137)
  *                   - Trap and gift spawning are now separate (C137)
  *                   - Added smoke particle effect when hit (Archetype)
+ *                   
+ *      [22/12/2023] - Game pausing support (C137)
  */
 using CsUtils;
 using CsUtils.Extensions;
@@ -96,8 +98,15 @@ public class GrinchBehaviour : Singleton<GrinchBehaviour>
 
     private void Start()
     {
+        Utility.singleton.onGamePaused += HandlePausing;
+
         startingLives = retreatHits;
         StartCoroutine(SpawnThings());
+    }
+
+    private void HandlePausing(bool doPausing)
+    {
+        spawnObjects = !doPausing;
     }
 
     IEnumerator SpawnThings()
