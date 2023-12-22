@@ -14,6 +14,8 @@
  *                   - Made class a singleton (C137)
  *                   
  *      [21/12/2023] - Vertical movement decay is now optional (C137)
+ *      
+ *      [22/12/2023] - Game pausing support (C137)
  */
 using CsUtils;
 using UnityEngine;
@@ -72,7 +74,7 @@ public class PlayerMovement : Singleton<PlayerMovement>
     /// <summary>
     /// Whether to decay the vertical positioning of the player
     /// </summary>
-    public bool doVerticalDecay;
+    public bool doVerticalDecay = true;
 
     /// <summary>
     /// Whether to do any movement at all
@@ -83,6 +85,18 @@ public class PlayerMovement : Singleton<PlayerMovement>
     /// Clamp limits
     /// </summary>
     public float minY = -0.5f, maxY = 40f, minZ = -23f, maxZ = 23f;
+
+    private void Start()
+    {
+        Utility.singleton.onGamePaused += HandlePausing;
+    }
+
+    private void HandlePausing(bool doPausing)
+    {
+        doMovement = !doPausing;
+        doVerticalDecay = !doPausing;
+        moveForward = !doPausing;
+    }
 
     private void FixedUpdate()
     {

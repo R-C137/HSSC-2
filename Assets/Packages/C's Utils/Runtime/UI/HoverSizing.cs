@@ -51,6 +51,8 @@ namespace CsUtils.UI
             {
                 CsSettings.Logger.Log("The referenced 'animatedText' isn't on the same GameObject as the 'HoverSizing' script. Pointer events will not register properly", LogSeverity.Warning, gameObject);
             }
+
+            originalFontSize = animatedText.fontSize;
         }
 
         private void Reset()
@@ -66,10 +68,9 @@ namespace CsUtils.UI
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            originalFontSize = animatedText.fontSize;
             autoSizing = animatedText.enableAutoSizing;
 
-            animatedText.fontSize *= sizeMultiplier;
+            animatedText.fontSize = originalFontSize * sizeMultiplier;
             animatedText.enableAutoSizing = false;
         }
     }

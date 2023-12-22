@@ -14,12 +14,25 @@
  *      
  *      [20/12/2023] - Traps are now thrown by only moving their X position (C137)
  *                   - Grinch now gets affected by thrown back traps (C137)
+ *                   
+ *      [22/12/2023] - Added SFX support (C137)
  */
 using System.Collections;
 using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
 public class TrapBehaviour : MonoBehaviour
 {
+    /// <summary>
+    /// The audio source handling the playing of the SFXs
+    /// </summary>
+    public AudioSource audioSource;
+
+    /// <summary>
+    /// The different SFXs to play when the trap is hit by santa
+    /// </summary>
+    public AudioClip[] hitSFX;
+
     /// <summary>
     /// How long it takes for the trap to be shot back at the grinch
     /// </summary>
@@ -75,6 +88,10 @@ public class TrapBehaviour : MonoBehaviour
     /// </summary>
     public virtual void TrapHit()
     {
+        audioSource.transform.parent = null;
+        audioSource.clip = hitSFX[Random.Range(0, hitSFX.Length)];
+        audioSource.Play();
+
         Destroy(gameObject);
     }
 
@@ -85,6 +102,9 @@ public class TrapBehaviour : MonoBehaviour
         isActivated = true;
 
         onTrapActivated?.Invoke();
+
+        audioSource.clip = Utility.singleton.commonSFX.trapActivation[Random.Range(0, Utility.singleton.commonSFX.trapActivation.Length)];
+        audioSource.Play();
     }
 
     /// <summary>
@@ -99,5 +119,10 @@ public class TrapBehaviour : MonoBehaviour
             GrinchBehaviour.singleton.GrinchHit();
             Destroy(gameObject);
         });
+    }
+
+    private void Reset()
+    {
+        TryGetComponent(out audioSource);
     }
 }

@@ -18,6 +18,8 @@
  *      [21/12/2023] - Code review (C137)
  *                   - Camera shake is now also done for obstacle collisions (C137)
  *                   - Gift counter now no longer goes below 0 (C137)
+ *                   
+ *      [22/12/2023] - Added SFX support (C137)
  */
 using CsUtils;
 using CsUtils.Systems.Logging;
@@ -29,6 +31,16 @@ public class SantaBehaviour : Singleton<SantaBehaviour>
     /// Reference to the shooting handler
     /// </summary>
     public Shooting shooting;
+
+    /// <summary>
+    /// The audio source handling the playing of the SFX
+    /// </summary>
+    public AudioSource sfxHandler;
+
+    /// <summary>
+    /// SFX to play when a natural obstacle is hit
+    /// </summary>
+    public AudioClip[] naturalObstacleHit;
 
     /// <summary>
     /// The number of lives the player has
@@ -58,13 +70,6 @@ public class SantaBehaviour : Singleton<SantaBehaviour>
             Utility.singleton.DoGameOver();
     }
 
-    [ContextMenu("Reduce Life")]
-    void ReduceLife()
-    {
-        lives--;
-        Logging.singleton.Log("Life is now at {0}", LogSeverity.Info, parameters: lives);
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Gift"))
@@ -86,6 +91,9 @@ public class SantaBehaviour : Singleton<SantaBehaviour>
             GrinchPositionalHandling.singleton.MoveFurther();
 
             Utility.singleton.ShakeCamera(5f, 1f);
+
+            sfxHandler.clip = naturalObstacleHit[Random.Range(0, naturalObstacleHit.Length)];
+            sfxHandler.Play();
         }
         if (other.CompareTag("Floor"))
         {

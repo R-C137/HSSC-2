@@ -8,6 +8,9 @@
  * 
  * Changes: 
  *      [22/12/2023] - Initial implementation (C137)
+ *                   - Exit button support (C137)
+ *                   - Removed button handling (C137)
+ *                   - Added support for happiness metric (C137)
  */
 using TMPro;
 using UnityEngine;
@@ -31,17 +34,12 @@ public class GameOverHandler : MonoBehaviour
 
     private void Update()
     {
-        giftsDeliveredShower.text = GiftCombo.singleton.giftDelivered.ToString();
+        giftsDeliveredShower.text = $"Delivered: {GiftCombo.singleton.giftDelivered}";
 
         distanceFlownShower.text = $"{Utility.singleton.distanceFlown:N0}M";
-    }
 
-    /// <summary>
-    /// Called when the restart button is clicked
-    /// </summary>
-    public void Restart()
-    {
-        Utility.singleton.Restart();
+        Vector3 rot = happinessPointer.eulerAngles;
+        rot.z = Utility.singleton.GetHappinessMeterRotation(Mathf.Clamp(GiftCombo.singleton.happiness, 0, 100));
+        happinessPointer.eulerAngles = rot;
     }
-
 }

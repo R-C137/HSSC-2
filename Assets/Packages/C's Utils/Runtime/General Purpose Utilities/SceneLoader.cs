@@ -83,7 +83,7 @@ public class SceneLoader : MonoBehaviour
         if (!isLoading)
             StartCoroutine(LoadSceneAsync(sceneBuildIndex, parameters));
         else
-            CsSettings.Logger.Log("[SceneLoader] Cannot load scene with ID:{0} as another one is currently being loaded", CsUtils.Systems.Logging.LogSeverity.Warning, parameters: sceneBuildIndex);
+            Debug.Log($"[SceneLoader] Cannot load scene with ID:{sceneBuildIndex} as another one is currently being loaded");
     }
     /// <summary>
     /// Loads a scene with a simple animation
@@ -109,8 +109,13 @@ public class SceneLoader : MonoBehaviour
         //Do the fade in animation
         DoFading(0, 1, fadeInTime);
 
+        if (SceneManager.GetActiveScene().buildIndex != 0)
+        {
+            Utility.singleton.Pause(false);
+            Time.timeScale = 0;
+        }
         //Wait for the fade in animation to finish
-        yield return new WaitForSeconds(fadeInTime);
+        yield return new WaitForSecondsRealtime(fadeInTime);
 
         //Do the scene loading after the fade in so as to prevent stuttering
         var operation = SceneManager.LoadSceneAsync(sceneBuildIndex, parameters);
@@ -118,7 +123,7 @@ public class SceneLoader : MonoBehaviour
         //Handles the delaying of the scene loading (Unity Editor Only)
 #if UNITY_EDITOR
         operation.allowSceneActivation = false;
-        LeanTween.delayedCall(loadingDelay, () => operation.allowSceneActivation = true);
+        LeanTween.delayedCall(loadingDelay, () => operation.allowSceneActivation = true).setIgnoreTimeScale(true);
 #endif
         //Display the loading bar if the loading takes too long
         LeanTween.delayedCall(loadingBarDisplayTimeout, () =>
@@ -128,7 +133,7 @@ public class SceneLoader : MonoBehaviour
 
             loadingBarFader.gameObject.SetActive(true);
             loadingBarFader.SetAlpha(1f);
-        });
+        }).setIgnoreTimeScale(true);
 
         //Display the loading progress in the loading bar
         while (operation.progress <= .9f)
@@ -136,6 +141,8 @@ public class SceneLoader : MonoBehaviour
             loadingBarSlider.value = Mathf.Clamp01(operation.progress / .9f);
             yield return null;
         }
+
+        Time.timeScale = 1;
 
         //Do the fading out
         DoFading(1, 0, fadeOutTIme, () => Destroy(gameObject));
@@ -149,6 +156,7 @@ public class SceneLoader : MonoBehaviour
         fadingTween = LeanTween.value(from, to, time)
             .setOnUpdate((v) => MultiFade.SetAlpha(v, backgroundFader, loadingBarFader))
             .setOnComplete(onComplete)
+            .setIgnoreTimeScale(true)
             .uniqueId;
     }
 }

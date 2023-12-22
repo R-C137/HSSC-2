@@ -8,19 +8,40 @@
  * 
  * Changes: 
  *      [20/12/2023] - Initial implementation (C137)
- *      [22/12/2023] - Proper hapiness meter
+ *      [22/12/2023] - Proper happiness meter (C137)
+ *                   - Improved combo slider (C137)
  */
 using CsUtils;
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+[Serializable]
+public struct FillImageSprite
+{
+    /// <summary>
+    /// The sprite to use when the combo is low
+    /// </summary>
+    public Sprite low;
+
+    /// <summary>
+    /// The sprite to use when the combo is high
+    /// </summary>
+    public Sprite high;
+}
+
 public class GiftCombo : Singleton<GiftCombo>
 {
     /// <summary>
-    /// The slider used to display the combo
+    /// The fill image used to display the combo
     /// </summary>
-    public Slider comboSlider;
+    public Image comboFillImage;
+
+    /// <summary>
+    /// The different sprites to used for the values of the combo
+    /// </summary>
+    public FillImageSprite comboFillImgeSprites;
 
     /// <summary>
     /// The curve used to control the increase in the number of gifts to be delivered for the combo to increase
@@ -107,22 +128,25 @@ public class GiftCombo : Singleton<GiftCombo>
 
         happinessPointer.eulerAngles = rot;
 
+        comboFillImage.sprite = happinessMultiplier > 10 ? comboFillImgeSprites.high : comboFillImgeSprites.low;
+
         if (doHappinessDecay)
             happiness = Mathf.Clamp(happiness - (100 / happinessDecaySpeed * Time.deltaTime), 0, 100);
 
         if (!doComboDecay)
             return;
 
-        comboSlider.value = Mathf.Clamp01(comboSlider.value - ((1 / comboDecaySpeed) * Time.deltaTime));
+        comboFillImage.fillAmount = Mathf.Clamp01(comboFillImage.fillAmount - ((1 / comboDecaySpeed) * Time.deltaTime));
 
-        if(comboSlider.value == 0)
+        if(comboFillImage.fillAmount == 0)
         {
             if (happinessMultiplier > 1)
             {
                 happinessMultiplier--;
-                comboSlider.value = 1;
+                comboFillImage.fillAmount = 1;
             }
         }
+
     }
 
     private void GiftDelivered(ref int giftCounter)
@@ -136,13 +160,13 @@ public class GiftCombo : Singleton<GiftCombo>
         LeanTween.cancel(happinessTweenID);
         happinessTweenID = LeanTween.delayedCall(happinessDecayDelay, () => doHappinessDecay = true).uniqueId;
 
-        comboSlider.value += 1 / comboIncreaseCurve.Evaluate(happinessMultiplier);
+        comboFillImage.fillAmount += 1 / comboIncreaseCurve.Evaluate(happinessMultiplier);
 
-        if(comboSlider.value >= 1)
+        if(comboFillImage.fillAmount >= 1)
         {
             happinessMultiplier += 1;
 
-            comboSlider.value = 0;
+            comboFillImage.fillAmount = 0;
         }
 
         happiness += 1 * happinessMultiplier;
