@@ -13,6 +13,10 @@
  *      [21/12/2023] - Camera effect support (C137)
  *                   - Added references to commonly used SFX (C137)
  *                   - Cursor lock key bind (C137)
+ *                   
+ *      [22/12/2023] - Added support for total distance flown (C137)
+ *                   - Cursor is unlocked when the game over UI is displayed (C137)
+ *                   - Happiness meter utility function support (C137)
  */
 using Cinemachine;
 using CsUtils;
@@ -77,12 +81,25 @@ public class Utility : Singleton<Utility>
     /// </summary>
     public int giftCounter;
 
+    public float distanceFlown
+    {
+        get
+        {
+            return (PlayerMovement.singleton.player.transform.position - playerStartPos).x;
+        }
+    }
+
     /// <summary>
     /// Raised when a gift is delivered
     /// </summary>
     /// <param name="giftCounter">The current value of the gift counter</param>
     public delegate void GiftDelivery(ref int giftCounter);
     public event GiftDelivery onGiftDelivered;
+
+    /// <summary>
+    /// The starting position of the player
+    /// </summary>
+    Vector3 playerStartPos;
 
     /// <summary>
     /// The id of the tween handling the camera shake
@@ -102,11 +119,13 @@ public class Utility : Singleton<Utility>
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+
+        playerStartPos = PlayerMovement.singleton.player.transform.position;
     }
 
     private void Update()
     {
-        giftCounterShower.text = $"Gifts: {giftCounter}";
+        giftCounterShower.text = giftCounter.ToString();
 
         if (Input.GetKeyDown(KeyCode.F11))
             Cursor.lockState = Cursor.lockState == CursorLockMode.Locked ? CursorLockMode.None : CursorLockMode.Locked;
@@ -126,6 +145,23 @@ public class Utility : Singleton<Utility>
         PlayerMovement.singleton.doMovement = false;
 
         gameOverCanvas.SetActive(true);
+        Cursor.lockState = CursorLockMode.None;
+    }
+
+    /// <summary>
+    /// Returns the z rotation of the happiness meter
+    /// </summary>
+    /// <param name="input">The value of the happiness meter</param>
+    /// <returns></returns>
+    public float GetHappinessMeterRotation(float input)
+    {
+        // Define the input and output ranges
+        float inMin = 0, inMax = 100, outMin = -90, outMax = 90;
+
+        // Map the input to the output range
+        float output = outMin + ((input - inMin) * (outMax - outMin)) / (inMax - inMin);
+
+        return -output;
     }
 
     /// <summary>

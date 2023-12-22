@@ -8,6 +8,7 @@
  * 
  * Changes: 
  *      [20/12/2023] - Initial implementation (C137)
+ *      [22/12/2023] - Proper hapiness meter
  */
 using CsUtils;
 using TMPro;
@@ -32,6 +33,16 @@ public class GiftCombo : Singleton<GiftCombo>
     public TextMeshProUGUI multiplierDisplay;
 
     /// <summary>
+    /// The rotational point for the happiness meter pointer
+    /// </summary>
+    public RectTransform happinessPointer;
+
+    /// <summary>
+    /// The total amount of gifts delivered
+    /// </summary>
+    public float giftDelivered;
+
+    /// <summary>
     /// The overall happiness of the world
     /// </summary>
     public float happiness;
@@ -47,19 +58,39 @@ public class GiftCombo : Singleton<GiftCombo>
     public float comboDecayDelay;
 
     /// <summary>
+    /// The delay for decaying the happiness after it has been increased
+    /// </summary>
+    public float happinessDecayDelay;
+
+    /// <summary>
     /// How long it takes for the combo to decay
     /// </summary>
     public float comboDecaySpeed;
 
     /// <summary>
-    /// Whether to do the decay of the combo
+    /// How long it takes for the happiness to decay
+    /// </summary>
+    public float happinessDecaySpeed;
+
+    /// <summary>
+    /// Whether to decay the combo
     /// </summary>
     public bool doComboDecay;
+
+    /// <summary>
+    /// Whether to decay the happiness
+    /// </summary>
+    public bool doHappinessDecay;
 
     /// <summary>
     /// The id of the tween handling the combo
     /// </summary>
     int comboTweenID;
+
+    /// <summary>
+    /// The id of the tween handling the happiness
+    /// </summary>
+    int happinessTweenID;
 
     private void Start()
     {
@@ -69,6 +100,15 @@ public class GiftCombo : Singleton<GiftCombo>
     private void Update()
     {
         multiplierDisplay.text = $"X{happinessMultiplier}";
+
+        Vector3 rot = happinessPointer.eulerAngles;
+
+        rot.z = Utility.singleton.GetHappinessMeterRotation(Mathf.Clamp(happiness, 0, 100));
+
+        happinessPointer.eulerAngles = rot;
+
+        if (doHappinessDecay)
+            happiness = Mathf.Clamp(happiness - (100 / happinessDecaySpeed * Time.deltaTime), 0, 100);
 
         if (!doComboDecay)
             return;
@@ -92,6 +132,10 @@ public class GiftCombo : Singleton<GiftCombo>
         LeanTween.cancel(comboTweenID);
         comboTweenID = LeanTween.delayedCall(comboDecayDelay, () => doComboDecay = true).uniqueId;
 
+        doHappinessDecay = false;
+        LeanTween.cancel(happinessTweenID);
+        happinessTweenID = LeanTween.delayedCall(happinessDecayDelay, () => doHappinessDecay = true).uniqueId;
+
         comboSlider.value += 1 / comboIncreaseCurve.Evaluate(happinessMultiplier);
 
         if(comboSlider.value >= 1)
@@ -102,5 +146,7 @@ public class GiftCombo : Singleton<GiftCombo>
         }
 
         happiness += 1 * happinessMultiplier;
+
+        giftDelivered++;
     }
 }
