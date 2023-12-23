@@ -118,7 +118,8 @@ public class GrinchBehaviour : Singleton<GrinchBehaviour>
             if (!spawnObjects)
                 yield return new WaitUntil(() => spawnObjects);
 
-            GameObject gift = Instantiate(Random.Range(0, 2) == 1 ? gifts[Random.Range(0, gifts.Length)] : traps[Random.Range(0, traps.Length)]);
+            GameObject gift = Instantiate(gifts[Random.Range(0, gifts.Length)]);
+            if (Random.Range(0, 2) == 1) gift.GetComponent<SurpriseInside>().TrapInside();
 
             gift.transform.position = spawnRegion.GetRandomPoint();
 

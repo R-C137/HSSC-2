@@ -61,7 +61,7 @@ public class TrapBehaviour : MonoBehaviour
 
     public virtual void Start()
     {
-        StartCoroutine(ActivationTimer());
+        //StartCoroutine(ActivationTimer());
     }
 
     /// <summary>

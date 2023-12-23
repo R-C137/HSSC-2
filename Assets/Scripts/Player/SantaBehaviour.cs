@@ -92,8 +92,8 @@ public class SantaBehaviour : Singleton<SantaBehaviour>
 
             Utility.singleton.ShakeCamera(5f, 1f);
 
-            sfxHandler.clip = naturalObstacleHit[Random.Range(0, naturalObstacleHit.Length)];
-            sfxHandler.Play();
+            //sfxHandler.clip = naturalObstacleHit[Random.Range(0, naturalObstacleHit.Length)];
+            //sfxHandler.Play();
         }
         if (other.CompareTag("Floor"))
         {
