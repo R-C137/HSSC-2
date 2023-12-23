@@ -11,6 +11,8 @@ TagManager:
   - Natural Obstacle
   - Floor
   - Candy Cane
+  - Anvil
+  - Grinch
   layers:
   - Default
   - TransparentFX

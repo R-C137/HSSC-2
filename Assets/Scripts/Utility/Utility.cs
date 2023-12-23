@@ -20,6 +20,9 @@
  *                   - Trap activation SFX support (C137)
  *                   - Quit button support (C137)
  *                   - Pausing support (C137)
+ *                   
+ *      [23/12/2023] - Added support for gift collection SFX (C137)
+ *                   - Ambient audios are now paused when the game is paused (C137)
  */
 using Cinemachine;
 using CsUtils;
@@ -60,6 +63,16 @@ public struct CommonSFX
     /// The different 'trash talk' SFX the grinch
     /// </summary>
     public AudioClip[] grinchTrashTalk;
+    
+    /// <summary>
+    /// The different SFXs to play when a gift is collected
+    /// </summary>
+    public AudioClip[] giftCollected;
+
+    /// <summary>
+    /// The SFX to play when an anvil is thrown
+    /// </summary>
+    public AudioClip anvilThrow;
 }
 
 public class Utility : Singleton<Utility>
@@ -73,6 +86,11 @@ public class Utility : Singleton<Utility>
     /// Class handling the scene loading animation
     /// </summary>
     public SceneLoader sceneLoader;
+
+    /// <summary>
+    /// The audio sources handling ambient audio
+    /// </summary>
+    public AudioSource[] ambientAudio;
 
     /// <summary>
     /// Reference to the cinemachine brain of the scene
@@ -170,7 +188,7 @@ public class Utility : Singleton<Utility>
         if (Input.GetKeyDown(KeyCode.F11))
             Cursor.lockState = Cursor.lockState == CursorLockMode.Locked ? CursorLockMode.None : CursorLockMode.Locked;
 
-        if(Input.GetKeyDown(pauseKey))
+        if(Input.GetKeyDown(pauseKey) && pauseCanvas != null)
         {
             pauseCanvas.SetActive(!isPaused);
 
@@ -258,6 +276,21 @@ public class Utility : Singleton<Utility>
         Time.timeScale = doPausing ? 0 : 1;
 
         isPaused = doPausing;
+
+        if (doPausing)
+        {
+            foreach(AudioSource audio in ambientAudio)
+            {
+                audio.Pause();
+            }
+        }
+        else
+        {
+            foreach (AudioSource audio in ambientAudio)
+            {
+                audio.Play();
+            }
+        }
     }
 
     /// <summary>

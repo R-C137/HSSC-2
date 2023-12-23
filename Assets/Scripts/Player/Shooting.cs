@@ -12,11 +12,14 @@
  *                   - Moved gift counting and display to Utility script (C137)
  *                   
  *      [21/12/2023] - Added support for new SFX handling system (C137)
- *      
  *      [22/12/2023] - Game pausing support (C137)
+ *      [23/12/2023] - Made class a singleton (C137)
+ *                   - Added anvil shooting support (C137)
  */
 using Cinemachine;
+using CsUtils;
 using UnityEngine;
+using UnityEngine.UI;
 
 [System.Serializable]
 public struct ShootingControls
@@ -32,12 +35,17 @@ public struct ShootingControls
     public KeyCode shoot;
 }
 
-public class Shooting : MonoBehaviour
+public class Shooting : Singleton<Shooting>
 {
     /// <summary>
     /// The different shooting controls
     /// </summary>
     public ShootingControls controls;
+
+    /// <summary>
+    /// The shower for the anvil icon
+    /// </summary>
+    public Image anvilIcon;
 
     /// <summary>
     /// The audio source used to play the SFX
@@ -60,6 +68,11 @@ public class Shooting : MonoBehaviour
     public GameObject projectile;
 
     /// <summary>
+    /// The projectile to use when shooting an anvil
+    /// </summary>
+    public GameObject anvilProjectile;
+
+    /// <summary>
     /// The sensitivity of the shooting camera
     /// </summary>
     public float sensitivity = 5f;
@@ -73,6 +86,11 @@ public class Shooting : MonoBehaviour
     /// The speed at which the projectile is shot
     /// </summary>
     public float projectileSpeed;
+
+    /// <summary>
+    /// The speed at which the anvil projectile is shot
+    /// </summary>
+    public float anvilProjectileSpeed;
 
     /// <summary>
     /// The timescale to use whilst aiming
@@ -93,6 +111,11 @@ public class Shooting : MonoBehaviour
     /// Whether the player can shoot
     /// </summary>
     public bool canShoot;
+
+    /// <summary>
+    /// Whether the player is currently shooting an anvil
+    /// </summary>
+    public bool shootingAnvil;
 
     /// <summary>
     /// The x rotation of the camera
@@ -164,6 +187,8 @@ public class Shooting : MonoBehaviour
 
         HandleCameraRotation();
         HandleShooting();
+
+        anvilIcon.gameObject.SetActive(shootingAnvil);
     }
 
     void HandleCameraRotation()
@@ -171,7 +196,6 @@ public class Shooting : MonoBehaviour
         if (Input.GetKeyDown(controls.aim))
         {
             shootingCamera.Priority = 5;
-            //Cursor.lockState = CursorLockMode.Confined;
         }
 
         if (Input.GetKeyUp(controls.aim))
@@ -201,14 +225,30 @@ public class Shooting : MonoBehaviour
         if (!Input.GetKeyDown(controls.shoot))
             return;
 
+        if (shootingAnvil)
+        {
+            GameObject anvilObj = Instantiate(anvilProjectile);
+            anvilObj.transform.position = shootingCamera.transform.position;
+
+            Rigidbody anvilRigidBody = anvilObj.GetComponent<Rigidbody>();
+            anvilRigidBody.AddForce(shootingCamera.transform.forward * anvilProjectileSpeed, ForceMode.VelocityChange);
+
+            audioSource.clip = Utility.singleton.commonSFX.anvilThrow;
+            audioSource.Play();
+
+            shootingAnvil = false;
+
+            return;
+        }
+
         if (Utility.singleton.giftCounter <= 0)
             return;
 
-        GameObject obj = Instantiate(projectile);
-        obj.transform.position = shootingCamera.transform.position;
+        GameObject projectileObj = Instantiate(projectile);
+        projectileObj.transform.position = shootingCamera.transform.position;
 
-        Rigidbody rb = obj.GetComponent<Rigidbody>();
-        rb.AddForce(shootingCamera.transform.forward * projectileSpeed, ForceMode.VelocityChange);
+        Rigidbody projectileRigidBody = projectileObj.GetComponent<Rigidbody>();
+        projectileRigidBody.AddForce(shootingCamera.transform.forward * projectileSpeed, ForceMode.VelocityChange);
 
         canShoot = false;
         Utility.singleton.giftCounter--;

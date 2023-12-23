@@ -16,6 +16,7 @@
  *      [21/12/2023] - Vertical movement decay is now optional (C137)
  *      
  *      [22/12/2023] - Game pausing support (C137)
+ *      [23/12/2023] - Added support for a lateral speed multiplier (C137)
  */
 using CsUtils;
 using UnityEngine;
@@ -37,6 +38,11 @@ public struct PlayerMovementControls
     /// Key to hold to go left
     /// </summary>
     public KeyCode left;
+
+    /// <summary>
+    /// Key to speedup the lateral movement
+    /// </summary>
+    public KeyCode lateralMovementMultiplier;
 }
 
 public class PlayerMovement : Singleton<PlayerMovement>
@@ -60,6 +66,11 @@ public class PlayerMovement : Singleton<PlayerMovement>
     /// The speed at which the player moves right and left
     /// </summary>
     public float lateralSpeed;
+
+    /// <summary>
+    /// The multiplier for the lateral speed
+    /// </summary>
+    public float lateralSpeedMultiplier;
 
     /// <summary>
     /// The speed at which the player moves up and down
@@ -112,7 +123,7 @@ public class PlayerMovement : Singleton<PlayerMovement>
         // Get the current position of the character
         Vector3 currentPosition = player.position;
 
-        // Clamp posiitons
+        // Clamp positions
         currentPosition.y = Mathf.Clamp(currentPosition.y, minY, maxY);
         currentPosition.z = Mathf.Clamp(currentPosition.z, minZ, maxZ);
         player.position = currentPosition;
@@ -131,10 +142,10 @@ public class PlayerMovement : Singleton<PlayerMovement>
             pos.y -= verticalSpeed * Time.deltaTime;
 
         if (Input.GetKey(controls.right))
-            pos.z -= lateralSpeed * Time.deltaTime;
+            pos.z -= lateralSpeed * Time.deltaTime * (Input.GetKey(controls.lateralMovementMultiplier) ? lateralSpeedMultiplier : 1);
 
         if (Input.GetKey(controls.left))
-            pos.z += lateralSpeed * Time.deltaTime;
+            pos.z += lateralSpeed * Time.deltaTime * (Input.GetKey(controls.lateralMovementMultiplier) ? lateralSpeedMultiplier : 1);
 
         player.position = pos;
     }
@@ -148,6 +159,7 @@ public class PlayerMovement : Singleton<PlayerMovement>
             up = KeyCode.Space,
             right = KeyCode.D,
             left = KeyCode.A,
+            lateralMovementMultiplier = KeyCode.LeftShift
         };
     }
 }

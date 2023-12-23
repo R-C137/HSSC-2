@@ -18,6 +18,7 @@
  *                   - Added smoke particle effect when hit (Archetype)
  *                   
  *      [22/12/2023] - Game pausing support (C137)
+ *      [23/12/2023] - Improved support for now gift spawning system (C137)
  */
 using CsUtils;
 using CsUtils.Extensions;
@@ -82,6 +83,11 @@ public class GrinchBehaviour : Singleton<GrinchBehaviour>
     public float retreatDelay = 1.5f;
 
     /// <summary>
+    /// Whether the grinch is currently retreating
+    /// </summary>
+    public bool isRetreating;
+
+    /// <summary>
     /// The amount of lives the grinch starts with
     /// </summary>
     int startingLives;
@@ -118,7 +124,13 @@ public class GrinchBehaviour : Singleton<GrinchBehaviour>
             if (!spawnObjects)
                 yield return new WaitUntil(() => spawnObjects);
 
-            GameObject gift = Instantiate(Random.Range(0, 2) == 1 ? gifts[Random.Range(0, gifts.Length)] : traps[Random.Range(0, traps.Length)]);
+            GameObject gift = Instantiate(gifts[Random.Range(0, gifts.Length)]);
+            if (Random.Range(0, 2) == 1)
+            {
+                var trapHandler = gift.GetComponent<SurpriseInside>();
+                trapHandler.trap = traps[Random.Range(0, traps.Length)];
+                trapHandler.TrapInside();
+            }
 
             gift.transform.position = spawnRegion.GetRandomPoint();
 
