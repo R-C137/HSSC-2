@@ -11,17 +11,17 @@ PrefabInstance:
     - target: {fileID: 1651850064201586910, guid: e6de0436020b45d4097132c1e3eb4d04,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.248116
+      value: -1.2481632
       objectReference: {fileID: 0}
     - target: {fileID: 1651850064201586910, guid: e6de0436020b45d4097132c1e3eb4d04,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.030000055
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1651850064201586910, guid: e6de0436020b45d4097132c1e3eb4d04,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 12.831429
+      value: 9.494604
       objectReference: {fileID: 0}
     - target: {fileID: 1651850064201586910, guid: e6de0436020b45d4097132c1e3eb4d04,
         type: 3}
@@ -61,13 +61,18 @@ PrefabInstance:
     - target: {fileID: 6391530842802938066, guid: e6de0436020b45d4097132c1e3eb4d04,
         type: 3}
       propertyPath: m_Name
-      value: Gift Red Variant
+      value: Gift Yellow
       objectReference: {fileID: 0}
     - target: {fileID: 7217136957419522711, guid: e6de0436020b45d4097132c1e3eb4d04,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: bd31b5c1ca387134b969e9fe7c35c9ac, type: 2}
+    - target: {fileID: 8621019787145490407, guid: e6de0436020b45d4097132c1e3eb4d04,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 5ce25eab186c7f143b6465852f968c2f, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
