@@ -216,7 +216,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 1191192502611460058}
-  hitSFX: []
+  hitSFX:
+  - {fileID: 8300000, guid: fde5f05a8a0a95346ad4f8e70a5b3fd5, type: 3}
   shootBackTime: 3
   activationTime: 3
   isActivated: 0

@@ -10,6 +10,7 @@
  *      [20/12/2023] - Initial implementation (C137)
  *      [22/12/2023] - Proper happiness meter (C137)
  *                   - Improved combo slider (C137)
+ *                   - Add combo & gift delivered metric support (C137)
  */
 using CsUtils;
 using System;
@@ -61,7 +62,7 @@ public class GiftCombo : Singleton<GiftCombo>
     /// <summary>
     /// The total amount of gifts delivered
     /// </summary>
-    public float giftDelivered;
+    public int giftDelivered;
 
     /// <summary>
     /// The overall happiness of the world
@@ -71,7 +72,7 @@ public class GiftCombo : Singleton<GiftCombo>
     /// <summary>
     /// The current value of the happiness multiplier combo
     /// </summary>
-    public float happinessMultiplier;
+    public int happinessMultiplier;
 
     /// <summary>
     /// The delay before decaying the combo after it has been increased
@@ -172,5 +173,8 @@ public class GiftCombo : Singleton<GiftCombo>
         happiness += 1 * happinessMultiplier;
 
         giftDelivered++;
+
+        PlayerPrefs.SetInt("metrics.giftsDelivered", Mathf.Max(PlayerPrefs.GetInt("metrics.giftsDelivered", 0), giftDelivered));
+        PlayerPrefs.SetInt("metrics.maxCombo", Mathf.Max(PlayerPrefs.GetInt("metrics.maxCombo", 0), happinessMultiplier));
     }
 }

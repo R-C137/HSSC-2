@@ -23,12 +23,14 @@
  *                   
  *      [23/12/2023] - Added support for gift collection SFX (C137)
  *                   - Ambient audios are now paused when the game is paused (C137)
+ *                   - Added play time metric support (C137)
+ *                   - Prevent game over menu bypass through pause menu (C137)
  */
 using Cinemachine;
 using CsUtils;
 using System;
+using System.Collections;
 using TMPro;
-using UnityEditor.Rendering;
 using UnityEngine;
 
 [Serializable]
@@ -132,6 +134,11 @@ public class Utility : Singleton<Utility>
     /// </summary>
     public bool isPaused;
 
+    /// <summary>
+    /// Whether the game is currently over
+    /// </summary>
+    public bool isGameOver;
+
     public float distanceFlown
     {
         get
@@ -179,10 +186,35 @@ public class Utility : Singleton<Utility>
         Cursor.lockState = CursorLockMode.Locked;
 
         playerStartPos = PlayerMovement.singleton.player.transform.position;
+
+        //This is no longer the player's first play through
+        PlayerPrefs.SetInt("firstTimePlay", 0);
+
+        StartCoroutine(PlayTimeHandler());
+        StartCoroutine(DistanceFlownHandler());
+    }
+
+    IEnumerator DistanceFlownHandler()
+    {
+        while (true)
+        {
+            yield return new WaitForSecondsRealtime(5f);
+            PlayerPrefs.SetFloat("metrics.maxDistance", Mathf.Max(PlayerPrefs.GetFloat("metrics.maxDistance", 0), distanceFlown));
+        }
+    }
+
+    IEnumerator PlayTimeHandler()
+    {
+        while (true)
+        {
+            yield return new WaitForSecondsRealtime(60f);
+            PlayerPrefs.SetInt("metrics.timePlayed", PlayerPrefs.GetInt("metrics.timePlayed", 0) + 1);
+        }
     }
 
     private void Update()
     {
+
         giftCounterShower.text = giftCounter.ToString();
 
         if (Input.GetKeyDown(KeyCode.F11))
@@ -190,6 +222,8 @@ public class Utility : Singleton<Utility>
 
         if(Input.GetKeyDown(pauseKey) && pauseCanvas != null)
         {
+            if (isGameOver)
+                return;
             pauseCanvas.SetActive(!isPaused);
 
             Pause(!isPaused);
@@ -216,6 +250,8 @@ public class Utility : Singleton<Utility>
         Pause(true);
         gameOverCanvas.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
+
+        isGameOver = true;
     }
 
     /// <summary>

@@ -3,7 +3,32 @@ guid: b0002ef1500efeb4d8e041e695f3401e
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: balls1
+    second: {fileID: 2100000, guid: d569ba0d7bf8e204897651b5b6dcccb0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: deco1
+    second: {fileID: 2100000, guid: d3c95242a53bf7442992cd1757338013, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: leaf
+    second: {fileID: 2100000, guid: 7f6ecf6cd45b13d4a8685eeba49af09b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: star
+    second: {fileID: 2100000, guid: 16694b3d1a6c05043b29a2326e4ccaf4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: wood
+    second: {fileID: 2100000, guid: bb0b87800a2e1bb4fb30864f83c76ac6, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
