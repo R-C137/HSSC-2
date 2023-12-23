@@ -49,6 +49,6 @@ public class JackInTheBox : TrapBehaviour
     void PopGoesTheWeasel()
     {
         crank.enabled = false;
-        jackAnim.enabled = true;
+        if (jackAnim != null) jackAnim.enabled = true;
     }
 }

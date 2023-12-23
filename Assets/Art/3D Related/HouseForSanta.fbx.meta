@@ -1,29 +1,9 @@
 fileFormatVersion: 2
-guid: b80234baebe665b4a9dc04817a2d23a8
+guid: fba886a8f958d544e96e362923d873ef
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: chimney
-    second: {fileID: 2100000, guid: 33dc1ac6180621d48bcc53e5f07fdf45, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: room
-    second: {fileID: 2100000, guid: 061864541231f4a47ae150fa315a2874, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: window
-    second: {fileID: 2100000, guid: 1b5a6495519951340b7b0fb1f78993d5, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: wood
-    second: {fileID: 2100000, guid: f8881f86e6692d54fb602e21f0f6bf67, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
