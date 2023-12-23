@@ -21,6 +21,11 @@ public class ProjectileBehaviour : MonoBehaviour
     /// </summary>
     public float lifeSpan = 10;
 
+    /// <summary>
+    /// Whether the current projectile is an anvil
+    /// </summary>
+    public bool isAnvil;
+
     private void Start()
     {
         StartCoroutine(Entropy());
@@ -33,10 +38,28 @@ public class ProjectileBehaviour : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other)
-    {
+      {
+        if (isAnvil)
+        {
+            if (other.CompareTag("Grinch"))
+            {
+                GrinchPositionalHandling.singleton.MoveCloser();
+            }
+
+            return;
+        }
+
         if (other.CompareTag("Gift"))
         {
-            Destroy(other.gameObject);
+            if (other.gameObject.TryGetComponent(out SurpriseInside surprise))
+            {
+                if (surprise.isTrap)
+                    surprise.ForceReplacement();
+                else
+                    Destroy(other.gameObject);
+            }
+            else
+                Destroy(other.gameObject);
             Destroy(gameObject);
         }
         if (other.CompareTag("Trap"))

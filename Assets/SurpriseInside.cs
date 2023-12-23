@@ -4,20 +4,38 @@ using UnityEngine;
 
 public class SurpriseInside : MonoBehaviour
 {
-    public GameObject[] traps;
+    public GameObject trap;
     public GameObject confetti;
 
     public Animator anim;
+
+    public bool isTrap;
+
+    public bool isReplaced;
+
+    public bool shootBack = false;
 
     GameObject replacementPrefab;
 
     public void InstantiateReplacement()
     {
+        if (isReplaced)
+            return;
+
         GameObject x = null;
 
         if (replacementPrefab != null)
         {
             x = Instantiate(replacementPrefab, transform.position, Quaternion.identity);
+            x.transform.parent = MapGeneration.singleton.spawnedTerrains[^1].transform;
+
+            var trap = x.GetComponent<TrapBehaviour>();
+
+            if (shootBack)
+                trap.TrapShot();
+            else
+                trap.Activate();
+
         }
         else
         {
@@ -28,10 +46,25 @@ public class SurpriseInside : MonoBehaviour
         Destroy(gameObject);
     }
 
+    [ContextMenu("Force Replace")]
+    public void ForceReplacement()
+    {
+        if (shootBack)
+            return;
+
+        shootBack = true;
+
+        InstantiateReplacement();
+        Destroy(gameObject);
+        isReplaced = true;
+    }
+
     public void TrapInside()
     {
-        int randomIndex = Random.Range(0, traps.Length);
-        GameObject selectedPrefab = traps[randomIndex];
+
+        GameObject selectedPrefab = trap;
+
+        isTrap = true;
 
         if (selectedPrefab != null)
         {

@@ -28,6 +28,11 @@ public struct ObstacleInfo
     /// How long it takes the obstacle to reach the other side
     /// </summary>
     public float moveSpeed;
+
+    /// <summary>
+    /// How likely is it that this obstacle will be spawned
+    /// </summary>
+    public float spawnChance;
 }
 
 public class NaturalObstacleSpawner: MonoBehaviour
@@ -81,7 +86,7 @@ public class NaturalObstacleSpawner: MonoBehaviour
             if (!canSpawnObstacles)
                 yield return new WaitUntil(() => canSpawnObstacles);
 
-            ObstacleInfo obstacle = obstacles[Random.Range(0, obstacles.Length)];
+            ObstacleInfo obstacle = GetObstacle();
 
             GameObject obj = Instantiate(obstacle.prefab);
             obj.transform.parent = MapGeneration.singleton.spawnedTerrains[^1].transform;
@@ -91,5 +96,21 @@ public class NaturalObstacleSpawner: MonoBehaviour
 
             LeanTween.moveZ(obj, spawnRegions[spawnRegion == 0 ? 1 : 0].transform.position.z, obstacle.moveSpeed);
         }
+    }
+
+    ObstacleInfo GetObstacle()
+    {
+        WeightedNumber[] weights = new WeightedNumber[obstacles.Length];
+
+        for (int i = 0; i < obstacles.Length; i++)
+        {
+            weights[i] = new WeightedNumber()
+            {
+                number = i,
+                probability = obstacles[i].spawnChance
+            };
+        }
+
+        return obstacles[StaticUtils.WeightedRandom(weights)];
     }
 }

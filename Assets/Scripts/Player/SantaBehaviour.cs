@@ -20,6 +20,8 @@
  *                   - Gift counter now no longer goes below 0 (C137)
  *                   
  *      [22/12/2023] - Added SFX support (C137)
+ *      [23/12/2023] - Added anvil collection support (C137)
+ *                   - Added gift SFX support (C137)
  */
 using CsUtils;
 using CsUtils.Systems.Logging;
@@ -36,6 +38,11 @@ public class SantaBehaviour : Singleton<SantaBehaviour>
     /// The audio source handling the playing of the SFX
     /// </summary>
     public AudioSource sfxHandler;
+
+    /// <summary>
+    /// The audio source handling the playing of the gift SFX
+    /// </summary>
+    public AudioSource giftSFX;
 
     /// <summary>
     /// SFX to play when a natural obstacle is hit
@@ -75,6 +82,10 @@ public class SantaBehaviour : Singleton<SantaBehaviour>
         if (other.CompareTag("Gift"))
         {
             Utility.singleton.giftCounter++;
+
+            giftSFX.clip = Utility.singleton.commonSFX.giftCollected[Random.Range(0, Utility.singleton.commonSFX.giftCollected.Length)];
+            giftSFX.Play();
+
             Destroy(other.gameObject);
         }
         if (other.CompareTag("Trap"))
@@ -90,19 +101,21 @@ public class SantaBehaviour : Singleton<SantaBehaviour>
             Destroy(other.gameObject);
             GrinchPositionalHandling.singleton.MoveFurther();
 
-            Utility.singleton.ShakeCamera(5f, 1f);
+            Utility.singleton.ShakeCamera();
 
-            //sfxHandler.clip = naturalObstacleHit[Random.Range(0, naturalObstacleHit.Length)];
-            //sfxHandler.Play();
+            sfxHandler.clip = naturalObstacleHit[Random.Range(0, naturalObstacleHit.Length)];
+            sfxHandler.Play();
         }
         if (other.CompareTag("Floor"))
         {
             Debug.Log("Ahh i hit the floor :(");
             GrinchPositionalHandling.singleton.MoveFurther();
+
+            Utility.singleton.ShakeCamera();
         }
-        if (other.CompareTag("Candy Cane"))
+        if (other.CompareTag("Anvil"))
         {
-            GrinchPositionalHandling.singleton.MoveCloser();
+            Shooting.singleton.shootingAnvil = true;
             Destroy(other.gameObject);
         }
     }

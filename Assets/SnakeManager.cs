@@ -23,11 +23,13 @@ public class SnakeManager : MonoBehaviour
     public Transform headPos;
     bool targetInCone, turningRight;
 
+    public Coroutine targetCoroutine;
+
     private void Start()
     {
         CreateBodyParts();
 
-        StartCoroutine("FindTargetsWithDelay", 0);
+        targetCoroutine = StartCoroutine(FindTargetsWithDelay(0));
     }
 
     IEnumerator FindTargetsWithDelay(float delay)

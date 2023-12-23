@@ -18,6 +18,11 @@ public class TrainToyTrap : TrapBehaviour
 
     public List<Marker> markerList = new List<Marker>();
 
+    public override void Start()
+    {
+        //base.Start();
+    }
+
     private void FixedUpdate()
     {
         UpdateMarkerList();

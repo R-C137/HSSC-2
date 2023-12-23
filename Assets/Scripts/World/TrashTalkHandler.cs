@@ -32,6 +32,8 @@ public class TrashTalkHandler : MonoBehaviour
 
             audioSource.clip = Utility.singleton.commonSFX.grinchTrashTalk[Random.Range(0, Utility.singleton.commonSFX.grinchTrashTalk.Length)];
             audioSource.Play();
+
+            yield return new WaitForSeconds(audioSource.clip.length);
         }
     }
 

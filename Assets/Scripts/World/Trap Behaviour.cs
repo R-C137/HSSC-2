@@ -61,7 +61,7 @@ public class TrapBehaviour : MonoBehaviour
 
     public virtual void Start()
     {
-        //StartCoroutine(ActivationTimer());
+        StartCoroutine(ActivationTimer());
     }
 
     /// <summary>
@@ -69,7 +69,7 @@ public class TrapBehaviour : MonoBehaviour
     /// </summary>
     public virtual void TrapShot()
     {
-        if (shot)
+        if (shot || GrinchBehaviour.singleton.isRetreating)
             return;
 
         shot = true;
@@ -88,6 +88,9 @@ public class TrapBehaviour : MonoBehaviour
     /// </summary>
     public virtual void TrapHit()
     {
+        if (shot)
+            return;
+
         audioSource.transform.parent = null;
         audioSource.clip = hitSFX[Random.Range(0, hitSFX.Length)];
         audioSource.Play();
@@ -95,16 +98,29 @@ public class TrapBehaviour : MonoBehaviour
         Destroy(gameObject);
     }
 
-    IEnumerator ActivationTimer()
+    public virtual void Activate()
     {
-        yield return new WaitForSeconds(activationTime);
-
         isActivated = true;
 
         onTrapActivated?.Invoke();
 
+        PlaySFX();
+    }
+
+    public virtual void PlaySFX()
+    {
         audioSource.clip = Utility.singleton.commonSFX.trapActivation[Random.Range(0, Utility.singleton.commonSFX.trapActivation.Length)];
         audioSource.Play();
+    }
+
+    IEnumerator ActivationTimer()
+    {
+        yield return new WaitForSeconds(activationTime);
+
+        if (isActivated)
+            yield break;
+
+        Activate();
     }
 
     /// <summary>
@@ -116,7 +132,8 @@ public class TrapBehaviour : MonoBehaviour
 
         LeanTween.moveLocalX(gameObject, 0, shootBackTime).setEase(LeanTweenType.easeInElastic).setOnComplete(() =>
         {
-            GrinchBehaviour.singleton.GrinchHit();
+            if(!GrinchBehaviour.singleton.isRetreating)
+                GrinchBehaviour.singleton.GrinchHit();
             Destroy(gameObject);
         });
     }
