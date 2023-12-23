@@ -35,6 +35,20 @@ public struct ShootingControls
     public KeyCode shoot;
 }
 
+[System.Serializable]
+public struct AnvilSprites
+{
+    /// <summary>
+    /// Sprite to use when the anvil is active
+    /// </summary>
+    public Sprite active;
+
+    /// <summary>
+    /// Sprite to use when the anvil is inactive
+    /// </summary>
+    public Sprite inactive;
+}
+
 public class Shooting : Singleton<Shooting>
 {
     /// <summary>
@@ -46,6 +60,11 @@ public class Shooting : Singleton<Shooting>
     /// The shower for the anvil icon
     /// </summary>
     public Image anvilIcon;
+
+    /// <summary>
+    /// The different sprites to use for the anvil
+    /// </summary>
+    public AnvilSprites anvilSprites;
 
     /// <summary>
     /// The audio source used to play the SFX
@@ -188,7 +207,7 @@ public class Shooting : Singleton<Shooting>
         HandleCameraRotation();
         HandleShooting();
 
-        anvilIcon.gameObject.SetActive(shootingAnvil);
+        anvilIcon.sprite = shootingAnvil ? anvilSprites.active : anvilSprites.inactive;
     }
 
     void HandleCameraRotation()

@@ -442,6 +442,7 @@ GameObject:
   - component: {fileID: 8691896506174122228}
   - component: {fileID: 1191192502611460058}
   - component: {fileID: 1915693124786616372}
+  - component: {fileID: 3451573580062881614}
   m_Layer: 0
   m_Name: Jack In The Box
   m_TagString: Trap
@@ -656,6 +657,20 @@ MonoBehaviour:
   proximityDistance: 5
   jackAnim: {fileID: 6975831876471152721}
   crank: {fileID: 8174545169853755055}
+--- !u!114 &3451573580062881614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4548791305892400785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bea33eff69b13954e8332dd22be880b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioSource: {fileID: 1191192502611460058}
+  defaultVolume: 0
 --- !u!1 &5255855497605946419
 GameObject:
   m_ObjectHideFlags: 0

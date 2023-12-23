@@ -85,6 +85,11 @@ public class Utility : Singleton<Utility>
     public CommonSFX commonSFX;
 
     /// <summary>
+    /// The shower for the current distance flown
+    /// </summary>
+    public TextMeshProUGUI distanceShower;
+
+    /// <summary>
     /// Class handling the scene loading animation
     /// </summary>
     public SceneLoader sceneLoader;
@@ -162,6 +167,12 @@ public class Utility : Singleton<Utility>
     public event GamePaused onGamePaused;
 
     /// <summary>
+    /// Raised when a setting is updated
+    /// </summary>
+    public delegate void SettingsUpdated();
+    public event SettingsUpdated onSettingsUpdated;
+
+    /// <summary>
     /// The starting position of the player
     /// </summary>
     Vector3 playerStartPos;
@@ -214,7 +225,6 @@ public class Utility : Singleton<Utility>
 
     private void Update()
     {
-
         giftCounterShower.text = giftCounter.ToString();
 
         if (Input.GetKeyDown(KeyCode.F11))
@@ -232,6 +242,16 @@ public class Utility : Singleton<Utility>
         }
     }
 
+    public void SettingUpdated()
+    {
+        onSettingsUpdated?.Invoke();
+    }
+
+    private void FixedUpdate()
+    {
+        distanceShower.text = $"{Mathf.Round(distanceFlown):N0}M";
+    }
+
     /// <summary>
     /// Sets the cursor lock mode
     /// </summary>
@@ -239,6 +259,11 @@ public class Utility : Singleton<Utility>
     public void LockCursor(bool lockState)
     {
         Cursor.lockState = lockState ? CursorLockMode.Locked : CursorLockMode.None;
+    }
+
+    public void ResetTimescale()
+    {
+        Shooting.singleton.ResetTimescale();
     }
 
     /// <summary>

@@ -9,10 +9,11 @@
  * Changes: 
  *      [22/12/2023] - Game pausing support (C137)
  */
+using CsUtils;
 using System.Collections;
 using UnityEngine;
 
-public class TrashTalkHandler : MonoBehaviour
+public class TrashTalkHandler : Singleton<TrashTalkHandler>
 {
     /// <summary>
     /// The audio source handling the playing of the SFXs
@@ -20,18 +21,26 @@ public class TrashTalkHandler : MonoBehaviour
     public AudioSource audioSource;
 
     /// <summary>
-    /// The delay in between playing the different 'trash talks' SFX
+    /// The minimum delay in between playing the different 'trash talks' SFX
     /// </summary>
-    public float trashTalkDelay;
+    public float minTrashTalkDelay;
+
+    /// <summary>
+    /// The maximum delay in between playing the different 'trash talks' SFX
+    /// </summary>
+    public float maxTrashTalkDelay;
 
     IEnumerator Start()
     {
         while (true)
         {
-            yield return new WaitForSeconds(trashTalkDelay);
+            yield return new WaitForSeconds(Random.Range(minTrashTalkDelay, maxTrashTalkDelay));
 
-            audioSource.clip = Utility.singleton.commonSFX.grinchTrashTalk[Random.Range(0, Utility.singleton.commonSFX.grinchTrashTalk.Length)];
-            audioSource.Play();
+            if (!GrinchBehaviour.singleton.isRetreating)
+            {
+                audioSource.clip = Utility.singleton.commonSFX.grinchTrashTalk[Random.Range(0, Utility.singleton.commonSFX.grinchTrashTalk.Length)];
+                audioSource.Play();
+            }
 
             yield return new WaitForSeconds(audioSource.clip.length);
         }
