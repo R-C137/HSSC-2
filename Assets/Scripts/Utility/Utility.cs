@@ -170,7 +170,7 @@ public class Utility : Singleton<Utility>
         if (Input.GetKeyDown(KeyCode.F11))
             Cursor.lockState = Cursor.lockState == CursorLockMode.Locked ? CursorLockMode.None : CursorLockMode.Locked;
 
-        if(Input.GetKeyDown(pauseKey))
+        if(Input.GetKeyDown(pauseKey) && pauseCanvas != null)
         {
             pauseCanvas.SetActive(!isPaused);
 
