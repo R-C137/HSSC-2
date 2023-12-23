@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.089524016, g: 0.0641381, b: 0.15991096, a: 1}
+  m_IndirectSpecularColor: {r: 0.08977926, g: 0.0643912, b: 0.16016102, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3193,6 +3193,7 @@ MonoBehaviour:
   grinch: {fileID: 1815759667}
   giftCounter: 50
   isPaused: 0
+  isGameOver: 0
 --- !u!114 &969153015
 MonoBehaviour:
   m_ObjectHideFlags: 0
