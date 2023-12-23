@@ -39,14 +39,8 @@ public class SFXVolume : MonoBehaviour
 
     private void OnDestroy()
     {
-        try
-        {
+        if(Utility.instance != null)
             Utility.singleton.onSettingsUpdated -= SetVolume;
-        }
-        catch (System.Exception)
-        {
-            //Will only throw in the editor
-        }
     }
 
     private void Reset()

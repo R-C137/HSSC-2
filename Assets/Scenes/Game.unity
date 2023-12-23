@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.08977926, g: 0.0643912, b: 0.16016102, a: 1}
+  m_IndirectSpecularColor: {r: 0.089524016, g: 0.0641381, b: 0.15991096, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4088,7 +4088,7 @@ MonoBehaviour:
   sensitivity: 5
   shootingInterval: 0.2
   projectileSpeed: 100
-  anvilProjectileSpeed: 300
+  anvilProjectileSpeed: 400
   aimingTimescale: 0.2
   aimingTimescaleMaxTime: 5
   canMoveCamera: 0
