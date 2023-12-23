@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4063439036132365852}
   - component: {fileID: 8691896506174122228}
   - component: {fileID: 1191192502611460058}
-  - component: {fileID: 6867191478627833387}
+  - component: {fileID: 17354833145508092}
   m_Layer: 0
   m_Name: Trap Prot
   m_TagString: Trap
@@ -203,7 +203,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &6867191478627833387
+--- !u!114 &17354833145508092
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -212,6 +212,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 4548791305892400785}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a591f79b60667046ba1c6417892717b, type: 3}
+  m_Script: {fileID: 11500000, guid: 9d15ce2456fb66e4c9c34005505571bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioSource: {fileID: 1191192502611460058}
+  hitSFX: []
+  shootBackTime: 3
+  activationTime: 3
+  isActivated: 0
+  shot: 0

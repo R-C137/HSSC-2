@@ -43,18 +43,27 @@ public class SnakeManager : MonoBehaviour
     {
         visibleTargets.Clear();
 
-        Vector3 dirToTarget = (targetPos.position - headPos.position).normalized;
-
-        targetInCone = (Vector3.Angle(headPos.forward, dirToTarget) < viewAngle / 2);
-
-        if (!targetInCone)
+        if (headPos == null)
         {
-            Vector3 relativePoint = headPos.InverseTransformPoint(targetPos.position);
-            if (relativePoint.x < 0f && Mathf.Abs(relativePoint.x) > Mathf.Abs(relativePoint.z))
-                turningRight = true;
-            if (relativePoint.x > 0f && Mathf.Abs(relativePoint.x) > Mathf.Abs(relativePoint.z))
-                turningRight = false;
+            Destroy(gameObject);
+            return;
         }
+        else
+        {
+            Vector3 dirToTarget = (targetPos.position - headPos.position).normalized;
+
+            targetInCone = (Vector3.Angle(headPos.forward, dirToTarget) < viewAngle / 2);
+
+            if (!targetInCone)
+            {
+                Vector3 relativePoint = headPos.InverseTransformPoint(targetPos.position);
+                if (relativePoint.x < 0f && Mathf.Abs(relativePoint.x) > Mathf.Abs(relativePoint.z))
+                    turningRight = true;
+                if (relativePoint.x > 0f && Mathf.Abs(relativePoint.x) > Mathf.Abs(relativePoint.z))
+                    turningRight = false;
+            }
+        }
+
     }
 
     public Vector3 DirFromAngle(float angleInDegrees, bool angleIsGlobal)
@@ -73,7 +82,7 @@ public class SnakeManager : MonoBehaviour
             CreateBodyParts();
         }
 
-        SnakeMovement();
+        if (headPos != null) SnakeMovement();
     }
 
     void SnakeMovement()
