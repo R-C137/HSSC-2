@@ -10,6 +10,7 @@
  *      [18/12/2023] - Initial implementation (C137)
  *      
  *      [19/12/2023] - Renamed fields (C137)
+ *      [23/12/2023] - Temporary fix to the terrain scaling (C137)
  */
 using CsUtils;
 using System.Collections;
@@ -66,7 +67,7 @@ public class MapGeneration : Singleton<MapGeneration>
             // Choose a random terrain prefab
             GameObject prefab = terrain[Random.Range(0, terrain.Length)];
 
-            float terrainSize = prefab.GetComponent<Renderer>().bounds.size.x; /*is there a better way to get the x size of the prefab here ?*/
+            float terrainSize = prefab.transform.GetChild(0).GetComponent<Renderer>().bounds.size.x; /*is there a better way to get the x size of the prefab here ?*/
 
             // Calculate position for new terrain
             Vector3 position = new(lastX + terrainSize, prefab.transform.position.y, prefab.transform.position.z);
