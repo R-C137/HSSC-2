@@ -111,8 +111,7 @@ public class SceneLoader : MonoBehaviour
 
         if (SceneManager.GetActiveScene().buildIndex != 0)
         {
-            Utility.singleton.Pause(false);
-            Time.timeScale = 0;
+            Utility.singleton.ResetTimescale();
         }
         //Wait for the fade in animation to finish
         yield return new WaitForSecondsRealtime(fadeInTime);
@@ -142,7 +141,7 @@ public class SceneLoader : MonoBehaviour
             yield return null;
         }
 
-        Time.timeScale = 1;
+        //Time.timeScale = 1;
 
         //Do the fading out
         DoFading(1, 0, fadeOutTIme, () => Destroy(gameObject));

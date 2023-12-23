@@ -10,8 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 9084436497803190224}
   - component: {fileID: 515207993705145162}
-  - component: {fileID: 199888118225411138}
-  - component: {fileID: 4391333224852384448}
   m_Layer: 0
   m_Name: TrainPart
   m_TagString: Trap
