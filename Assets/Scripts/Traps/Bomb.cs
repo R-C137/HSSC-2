@@ -48,6 +48,8 @@ public class Bomb : TrapBehaviour
     /// </summary>
     int boomActivatedTween;
 
+    public GameObject explosion;
+
     public override void Start()
     {
        // base.Start();
@@ -110,8 +112,14 @@ public class Bomb : TrapBehaviour
                 SantaBehaviour.singleton.lives--;
                 //Logging.singleton.Log("Santa was hit by an explosion from a bomb", LogSeverity.Info);
             }
-            Destroy(gameObject);
+            explosion.SetActive(true);
+            Invoke("DelayedDestroyObject", 1);
         }).setDelay(.5f).uniqueId;
     }
 
+    void DelayedDestroyObject()
+    {
+        // Destroy the GameObject after the delay
+        Destroy(gameObject);
+    }
 }

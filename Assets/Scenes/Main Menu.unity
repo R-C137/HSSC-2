@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.09879617, g: 0.09183517, b: 0.16870841, a: 1}
+  m_IndirectSpecularColor: {r: 0.09890766, g: 0.09194654, b: 0.16881797, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2375,7 +2375,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 136a85b97ff782f48b1485291b5915d0, type: 2}
+  - {fileID: 2100000, guid: 2211022c5ca2cbc40afdd00b77eb5659, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2415,7 +2415,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -12.16, y: 10.4, z: 44.85}
-  m_LocalScale: {x: 1.8485, y: 4.1917458, z: 3.933608}
+  m_LocalScale: {x: 1.8485, y: 4.1917458, z: 7.0612354}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 940920226}
@@ -6235,6 +6235,11 @@ PrefabInstance:
       propertyPath: ShapeModule.radiusThickness
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3375190970430740247, guid: fa53600af43feb14cad3b867d228c648,
+        type: 3}
+      propertyPath: EmissionModule.rateOverTime.scalar
+      value: 60
+      objectReference: {fileID: 0}
     - target: {fileID: 4751842449228899606, guid: fa53600af43feb14cad3b867d228c648,
         type: 3}
       propertyPath: m_Name
@@ -6393,6 +6398,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -35.849
+      objectReference: {fileID: 0}
+    - target: {fileID: 7661817192526708830, guid: f7f6d65f269b9a94e8c2cbc513c1279b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8746622672265333859, guid: f7f6d65f269b9a94e8c2cbc513c1279b,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
