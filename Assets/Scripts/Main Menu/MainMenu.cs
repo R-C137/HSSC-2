@@ -57,6 +57,11 @@ public class MainMenu : MonoBehaviour
     /// </summary>
     public CutsceneHandler cutscene;
 
+    /// <summary>
+    /// The notice for the webGL build
+    /// </summary>
+    public TextMeshProUGUI webGLNotice;
+
     private void Start()
     {
         if (PlayerPrefs.GetInt("firstTimePlay", 1) == 0)
@@ -68,6 +73,9 @@ public class MainMenu : MonoBehaviour
         }
         else
             metrics.metrics.SetActive(false);
+
+        if (Application.platform == RuntimePlatform.WebGLPlayer)
+            webGLNotice.gameObject.SetActive(true);
     }
 
     /// <summary>

@@ -211,10 +211,10 @@ namespace CsUtils.Systems.Logging
 
         private void Start()
         {
-            CompressLogFile();
+            //CompressLogFile();
 
-            if(doExceptionLogging)
-                Application.logMessageReceived += HandleErrors;
+            //if(doExceptionLogging)
+            //    Application.logMessageReceived += HandleErrors;
         }
 
         protected virtual void HandleErrors(string condition, string stackTrace, LogType type)

@@ -912,8 +912,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 54.260025, y: 1, z: 70.829926}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 54.260025, y: 1.4748718, z: 70.829926}
+  m_Center: {x: 0, y: 0.23743588, z: 0}
 --- !u!1 &7230119306011812986
 GameObject:
   m_ObjectHideFlags: 0
@@ -1452,7 +1452,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9084782071744029936}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1

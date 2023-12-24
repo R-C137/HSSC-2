@@ -137,6 +137,11 @@ public class Shooting : Singleton<Shooting>
     public bool shootingAnvil;
 
     /// <summary>
+    /// The range of the mouse sensitivity
+    /// </summary>
+    public float minMouseSens, maxMouseSens;
+
+    /// <summary>
     /// The x rotation of the camera
     /// </summary>
     float xRot;
@@ -160,8 +165,16 @@ public class Shooting : Singleton<Shooting>
     {
         blendHandler.onBlendFinished += BlendFinished;
         Utility.singleton.onGamePaused += HandlePausing;
+        Utility.singleton.onSettingsUpdated += UpdateSettings;
 
         normalFixedDeltatime = Time.fixedDeltaTime;
+
+        sensitivity = Mathf.Lerp(minMouseSens, maxMouseSens, PlayerPrefs.GetFloat("settings.mouseSensitivity", .5f));
+    }
+
+    private void UpdateSettings()
+    {
+        sensitivity = Mathf.Lerp(minMouseSens, maxMouseSens, PlayerPrefs.GetFloat("settings.mouseSensitivity", .5f));
     }
 
     private void HandlePausing(bool doPausing)

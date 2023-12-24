@@ -56,7 +56,7 @@ public class Bomb : TrapBehaviour
         {
             SantaBehaviour.singleton.lives--;
 
-            Logging.singleton.Log("Santa has hit an activated bomb and has been damaged", LogSeverity.Info);
+            //Logging.singleton.Log("Santa has hit an activated bomb and has been damaged", LogSeverity.Info);
 
             bombSFX.clip = bombExplode[Random.Range(0, bombExplode.Length)];
             bombSFX.Play();
@@ -101,7 +101,7 @@ public class Bomb : TrapBehaviour
             if (hitCount > 0)
             {
                 SantaBehaviour.singleton.lives--;
-                Logging.singleton.Log("Santa was hit by an explosion from a bomb", LogSeverity.Info);
+                //Logging.singleton.Log("Santa was hit by an explosion from a bomb", LogSeverity.Info);
             }
             Destroy(gameObject);
         }).setDelay(.5f);

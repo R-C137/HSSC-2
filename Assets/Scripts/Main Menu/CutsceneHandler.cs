@@ -79,8 +79,19 @@ public class CutsceneHandler : Singleton<CutsceneHandler>
             fader.SetAlpha(1f);
 
             keyFaderTwwen = LeanTween.value(1, 0, keyFadeTime)
-                                     .setOnUpdate(v => fader.SetAlpha(v))
-                                     .setOnComplete(() => fader.gameObject.SetActive(false))
+                                     .setOnUpdate(v =>
+                                     {
+                                         if (fader == null)
+                                             return;
+                                         fader.SetAlpha(v);
+                                     })
+                                     .setOnComplete(() =>
+                                     {
+                                         if (fader == null || fader.gameObject == null)
+                                             return;
+
+                                         fader.gameObject.SetActive(false);
+                                     })
                                      .setDelay(keyShowTime)
                                      .uniqueId;
         }
