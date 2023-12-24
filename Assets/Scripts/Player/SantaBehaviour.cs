@@ -84,8 +84,8 @@ public class SantaBehaviour : Singleton<SantaBehaviour>
         }
         set
         {
+            LifeUpdated(value);
             _lives = value;
-            LifeUpdated();
         }
     }
 
@@ -93,19 +93,38 @@ public class SantaBehaviour : Singleton<SantaBehaviour>
     private int _lives;
 
     /// <summary>
+    /// How long it takes for a life to be restored after it has been removed
+    /// </summary>
+    public float lifeRestoreCooldown = 15f;
+
+
+    /// <summary>
+    /// The id of the tween handling the lives
+    /// </summary>
+    int lifeTween;
+
+    /// <summary>
     /// Called when the player's lives are updated
     /// </summary>
-    void LifeUpdated()
+    void LifeUpdated(int value)
     {
-        if(lives <= 0)
-            Utility.singleton.DoGameOver();
+        if (value < _lives)
+        {
+            if (value <= 0)
+                Utility.singleton.DoGameOver();
 
-        Utility.singleton.ShakeCamera();
+            Utility.singleton.ShakeCamera();
+        }
 
         for (int i = 0; i < lifeDisplay.hearts.Length; i++)
         {
-            lifeDisplay.hearts[i].sprite = _lives - 1 < i ? lifeDisplay.emptyHeart : lifeDisplay.fullHeart;
+            lifeDisplay.hearts[i].sprite = value - 1 < i ? lifeDisplay.emptyHeart : lifeDisplay.fullHeart;
         }
+
+        LeanTween.cancel(lifeTween, false);
+        if(value != 3)
+            lifeTween = LeanTween.delayedCall(lifeRestoreCooldown, () => lives++).uniqueId;
+
     }
 
     [ContextMenu("remove life")]
@@ -155,5 +174,10 @@ public class SantaBehaviour : Singleton<SantaBehaviour>
             Shooting.singleton.shootingAnvil = true;
             Destroy(other.gameObject);
         }
+    }
+
+    private void OnDisable()
+    {
+        LeanTween.cancel(lifeTween);
     }
 }

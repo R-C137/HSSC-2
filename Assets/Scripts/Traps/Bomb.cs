@@ -43,6 +43,11 @@ public class Bomb : TrapBehaviour
     /// </summary>
     public AudioClip[] bombExplode;
 
+    /// <summary>
+    /// The id of the tween handling the bomb activated tween
+    /// </summary>
+    int boomActivatedTween;
+
     public override void Start()
     {
        // base.Start();
@@ -68,6 +73,8 @@ public class Bomb : TrapBehaviour
                 if (bombSFX != null && bombSFX.gameObject != null)
                     Destroy(bombSFX.gameObject);
             });
+
+            LeanTween.cancel(boomActivatedTween, false);
         }
 
         base.TrapHit();
@@ -81,7 +88,7 @@ public class Bomb : TrapBehaviour
 
     private void BombActivated()
     {
-        LeanTween.scale(gameObject, transform.localScale * 2, explosionDelay).setOnComplete(() =>
+        boomActivatedTween = LeanTween.scale(gameObject, transform.localScale * 2, explosionDelay).setOnComplete(() =>
         {
             bombSFX.clip = bombExplode[Random.Range(0, bombExplode.Length)];
             bombSFX.Play();
@@ -90,8 +97,8 @@ public class Bomb : TrapBehaviour
 
             LeanTween.delayedCall(5f, () =>
             {
-                if(bombSFX != null && bombSFX.gameObject != null)
-                Destroy(bombSFX.gameObject);
+                if (bombSFX != null && bombSFX.gameObject != null)
+                    Destroy(bombSFX.gameObject);
             });
 
             Collider[] colliders = new Collider[1];
@@ -104,7 +111,7 @@ public class Bomb : TrapBehaviour
                 //Logging.singleton.Log("Santa was hit by an explosion from a bomb", LogSeverity.Info);
             }
             Destroy(gameObject);
-        }).setDelay(.5f);
+        }).setDelay(.5f).uniqueId;
     }
 
 }

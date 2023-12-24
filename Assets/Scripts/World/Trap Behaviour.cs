@@ -18,6 +18,7 @@
  *      [22/12/2023] - Added SFX support (C137)
  */
 using System.Collections;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
@@ -54,6 +55,11 @@ public class TrapBehaviour : MonoBehaviour
     public bool shot;
 
     /// <summary>
+    /// Whether the trap has been hit
+    /// </summary>
+    public bool hit;
+
+    /// <summary>
     /// Event raised when the trap is activated
     /// </summary>
     public delegate void TrapActivated();
@@ -88,8 +94,10 @@ public class TrapBehaviour : MonoBehaviour
     /// </summary>
     public virtual void TrapHit()
     {
-        if (shot)
+        if (shot || hit)
             return;
+
+        hit = true;
 
         audioSource.transform.parent = null;
         audioSource.clip = hitSFX[Random.Range(0, hitSFX.Length)];
