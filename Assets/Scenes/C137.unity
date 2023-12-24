@@ -198,6 +198,10 @@ MonoBehaviour:
     followX: 1
     followY: 0
     followZ: 0
+  smoothAxes:
+    smoothX: 0
+    smoothY: 0
+    smoothZ: 0
   autoOffset: 0
   useEasing: 0
 --- !u!4 &50354086 stripped
@@ -326,7 +330,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.038680382, y: 0.7060481, z: -0.03868039, w: 0.706048}
+  m_LocalRotation: {x: 0.0386804, y: 0.7060481, z: -0.03868041, w: 0.706048}
   m_LocalPosition: {x: -14.209999, y: 12.07, z: 0.0000017881393}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -469,6 +473,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1785477392846047862, guid: 4f3f4cdaba1be6d4abac07f0a5618ca4,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 7.77
+      objectReference: {fileID: 0}
+    - target: {fileID: 2961029253742886099, guid: 4f3f4cdaba1be6d4abac07f0a5618ca4,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -96.78
+      objectReference: {fileID: 0}
     - target: {fileID: 3187269311504982407, guid: 4f3f4cdaba1be6d4abac07f0a5618ca4,
         type: 3}
       propertyPath: m_Name
@@ -481,7 +495,7 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: 4f3f4cdaba1be6d4abac07f0a5618ca4, type: 3}
 --- !u!4 &362463787 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 1313419421133375304, guid: 4f3f4cdaba1be6d4abac07f0a5618ca4,
+  m_CorrespondingSourceObject: {fileID: 3786560036321610412, guid: 4f3f4cdaba1be6d4abac07f0a5618ca4,
     type: 3}
   m_PrefabInstance: {fileID: 362463786}
   m_PrefabAsset: {fileID: 0}
@@ -890,6 +904,10 @@ MonoBehaviour:
     followX: 1
     followY: 1
     followZ: 1
+  smoothAxes:
+    smoothX: 0
+    smoothY: 0
+    smoothZ: 0
   autoOffset: 0
   useEasing: 0
 --- !u!54 &628246691
@@ -932,6 +950,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shooting: {fileID: 1166485468}
+  sfxHandler: {fileID: 0}
+  giftSFX: {fileID: 0}
+  naturalObstacleHit: []
   _lives: 3
 --- !u!1001 &656020428
 PrefabInstance:
@@ -1269,8 +1290,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 706134429}
-  hoverSFX: {fileID: 8300000, guid: 4e8d062c98416ab4a875ddf9d4383b1c, type: 3}
-  clickSFX: {fileID: 8300000, guid: 3de029770585ee8459bd56bf5db02e77, type: 3}
 --- !u!82 &706134429
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1530,9 +1549,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 832263454}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: 0.7356113, w: 0.67740387}
-  m_LocalPosition: {x: 0.6751, y: 0.43999958, z: 0.59}
-  m_LocalScale: {x: 0.15147004, y: 1.9075774, z: 0.15147}
+  m_LocalRotation: {x: -0.026279207, y: -0, z: -0.6812534, w: 0.73157585}
+  m_LocalPosition: {x: 0.67774606, y: 0.46100044, z: 0.5117263}
+  m_LocalScale: {x: 0.3, y: 1.9174337, z: 0.3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 622535376}
@@ -1729,6 +1748,10 @@ MonoBehaviour:
     followX: 1
     followY: 1
     followZ: 0
+  smoothAxes:
+    smoothX: 0
+    smoothY: 0
+    smoothZ: 0
   autoOffset: 0
   useEasing: 0
 --- !u!114 &876619949
@@ -1747,6 +1770,7 @@ MonoBehaviour:
   - prefab: {fileID: 3718559749764474525, guid: c94690b6d45854e4cb2878962c92e4c5,
       type: 3}
     moveSpeed: 2
+    spawnChance: 0
   spawnRegions:
   - {fileID: 1615448519}
   - {fileID: 710702732}
@@ -1840,11 +1864,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4cec442b94ddc446875e4f9dd19d727, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  commonSFX:
+    UIHover: {fileID: 0}
+    UIClick: {fileID: 0}
+    projectileShoot: []
+    trapActivation: []
+    santaTrashTalk: []
+    grinchTrashTalk: []
+    giftCollected: []
+    anvilThrow: {fileID: 0}
+  distanceShower: {fileID: 0}
   sceneLoader: {fileID: 5669668933031466350}
+  ambientAudio: []
+  cinemachineBrain: {fileID: 0}
   giftCounterShower: {fileID: 1611711766}
   gameOverCanvas: {fileID: 1191226904}
+  pauseCanvas: {fileID: 0}
+  pauseKey: 27
   grinch: {fileID: 1815759667}
   giftCounter: 50
+  isPaused: 0
+  isGameOver: 0
+  gameStarted: 0
 --- !u!114 &969153015
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1857,7 +1898,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04f6a4c18b20f5240bdd00858938ae19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  comboSlider: {fileID: 991679429}
+  comboFillImage: {fileID: 0}
+  comboFillImgeSprites:
+    low: {fileID: 0}
+    high: {fileID: 0}
   comboIncreaseCurve:
     serializedVersion: 2
     m_Curve:
@@ -1883,11 +1927,16 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   multiplierDisplay: {fileID: 1616968249}
+  happinessPointer: {fileID: 0}
+  giftDelivered: 0
   happiness: 0
   happinessMultiplier: 1
   comboDecayDelay: 5
+  happinessDecayDelay: 0
   comboDecaySpeed: 8
+  happinessDecaySpeed: 0
   doComboDecay: 1
+  doHappinessDecay: 0
 --- !u!1 &971697278
 GameObject:
   m_ObjectHideFlags: 0
@@ -2560,11 +2609,14 @@ MonoBehaviour:
     up: 32
     right: 100
     left: 97
+    lateralMovementMultiplier: 0
   player: {fileID: 1782771619}
   forwardSpeed: 25
   lateralSpeed: 7.5
+  lateralSpeedMultiplier: 0
   verticalSpeed: 5
   moveForward: 1
+  doVerticalDecay: 1
   doMovement: 1
   minY: -0.5
   maxY: 40
@@ -2585,22 +2637,26 @@ MonoBehaviour:
   controls:
     aim: 324
     shoot: 323
-  throwSFX:
-  - {fileID: 8300000, guid: fc3f98fa93c2edd42b43f478de363f72, type: 3}
-  - {fileID: 8300000, guid: c7e36baee9454f8439a7bb33d3557271, type: 3}
-  - {fileID: 8300000, guid: da91c4c7e568cb94596d55a97d004fbb, type: 3}
+  anvilIcon: {fileID: 0}
+  anvilSprites:
+    active: {fileID: 0}
+    inactive: {fileID: 0}
   audioSource: {fileID: 1166485469}
   shootingCamera: {fileID: 1376607458}
   blendHandler: {fileID: 1376607459}
-  projectile: {fileID: 3402173396153654508, guid: 84e3ed46b26fb1243820a2a1470ec408,
-    type: 3}
+  projectile: []
+  anvilProjectile: {fileID: 0}
   sensitivity: 5
   shootingInterval: 0.2
   projectileSpeed: 100
+  anvilProjectileSpeed: 0
   aimingTimescale: 0.2
   aimingTimescaleMaxTime: 5
   canMoveCamera: 0
   canShoot: 1
+  shootingAnvil: 0
+  minMouseSens: 0
+  maxMouseSens: 0
 --- !u!82 &1166485469
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2928,6 +2984,10 @@ MonoBehaviour:
     followX: 1
     followY: 1
     followZ: 1
+  smoothAxes:
+    smoothX: 0
+    smoothY: 0
+    smoothZ: 0
   autoOffset: 0
   useEasing: 0
 --- !u!1 &1487745437
@@ -3178,7 +3238,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1593039352}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.038680382, y: 0.7060481, z: -0.03868039, w: 0.706048}
+  m_LocalRotation: {x: 0.0386804, y: 0.7060481, z: -0.03868041, w: 0.706048}
   m_LocalPosition: {x: -11.759999, y: 3.9799995, z: 0.0000017881393}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3628,8 +3688,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 362463787}
   - {fileID: 876619947}
+  - {fileID: 362463787}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1652064032
@@ -3708,9 +3768,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1662619378}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: 0.7356113, w: 0.67740387}
-  m_LocalPosition: {x: 0.6751, y: 0.43999958, z: -0.59}
-  m_LocalScale: {x: 0.15147004, y: 1.9075774, z: 0.15147}
+  m_LocalRotation: {x: 0.026279263, y: -0, z: -0.6812534, w: 0.73157585}
+  m_LocalPosition: {x: 0.6777458, y: 0.46100044, z: -0.5117264}
+  m_LocalScale: {x: 0.3, y: 1.9174337, z: 0.3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 622535376}
@@ -3831,6 +3891,13 @@ MonoBehaviour:
   traps:
   - {fileID: 4828858995270217226, guid: d1e2f4ccd1c9ab14193541ae732772f0, type: 3}
   - {fileID: 5333101258201772638, guid: dcfa16a24a894014898e75c673108de5, type: 3}
+  minGiftSizeMultiplier: 0
+  maxGiftSizeMultiplier: 0
+  sfx:
+    hit: []
+    retreat: {fileID: 0}
+  hitSFX: {fileID: 0}
+  retreatSFX: {fileID: 0}
   followScript: {fileID: 1815759669}
   spawnRegion: {fileID: 991288259}
   retreatPosition: {fileID: 5509956}
@@ -3840,6 +3907,8 @@ MonoBehaviour:
   recoverTime: 5
   retreatTime: 5
   retreatDelay: 1.5
+  isRetreating: 0
+  smokePoof: {fileID: 0}
 --- !u!1 &1716165695
 GameObject:
   m_ObjectHideFlags: 0
@@ -4183,6 +4252,10 @@ MonoBehaviour:
     followX: 1
     followY: 1
     followZ: 1
+  smoothAxes:
+    smoothX: 0
+    smoothY: 0
+    smoothZ: 0
   autoOffset: 0
   useEasing: 0
 --- !u!65 &1815759670
