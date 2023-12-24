@@ -24,8 +24,27 @@
  *                   - Added gift SFX support (C137)
  */
 using CsUtils;
-using CsUtils.Systems.Logging;
 using UnityEngine;
+using UnityEngine.UI;
+
+[System.Serializable]
+public struct LifeDisplay
+{
+    /// <summary>
+    /// The sprite to use for a full heart
+    /// </summary>
+    public Sprite fullHeart;
+
+    /// <summary>
+    /// The sprite to use for an empty heart
+    /// </summary>
+    public Sprite emptyHeart;
+
+    /// <summary>
+    /// The images to display the hearts
+    /// </summary>
+    public Image[] hearts;
+}
 
 public class SantaBehaviour : Singleton<SantaBehaviour>
 {
@@ -33,6 +52,11 @@ public class SantaBehaviour : Singleton<SantaBehaviour>
     /// Reference to the shooting handler
     /// </summary>
     public Shooting shooting;
+
+    /// <summary>
+    /// Contains information about the displaying of the player's lives in the UI
+    /// </summary>
+    public LifeDisplay lifeDisplay;
 
     /// <summary>
     /// The audio source handling the playing of the SFX
@@ -77,6 +101,17 @@ public class SantaBehaviour : Singleton<SantaBehaviour>
             Utility.singleton.DoGameOver();
 
         Utility.singleton.ShakeCamera();
+
+        for (int i = 0; i < lifeDisplay.hearts.Length; i++)
+        {
+            lifeDisplay.hearts[i].sprite = _lives - 1 < i ? lifeDisplay.emptyHeart : lifeDisplay.fullHeart;
+        }
+    }
+
+    [ContextMenu("remove life")]
+    void removelife()
+    {
+        lives--;
     }
 
     private void OnTriggerEnter(Collider other)
