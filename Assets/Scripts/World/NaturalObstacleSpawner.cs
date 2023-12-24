@@ -93,6 +93,7 @@ public class NaturalObstacleSpawner: MonoBehaviour
 
             int spawnRegion = Random.Range(0, 2);
             obj.transform.position = spawnRegions[spawnRegion].GetRandomPoint();
+            if (spawnRegion == 0)obj.transform.Rotate(0f, 180f, 0f);
 
             LeanTween.moveZ(obj, spawnRegions[spawnRegion == 0 ? 1 : 0].transform.position.z, obstacle.moveSpeed);
         }
