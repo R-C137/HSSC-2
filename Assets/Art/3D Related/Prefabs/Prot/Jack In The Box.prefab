@@ -411,7 +411,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.7
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -510,7 +510,7 @@ MonoBehaviour:
   audioSource: {fileID: 1191192502611460058}
   hitSFX:
   - {fileID: 8300000, guid: 4cc4d650e2131a044ab6a005a7ea1d1c, type: 3}
-  shootBackTime: 3
+  shootBackTime: 5
   activationTime: 3
   isActivated: 0
   shot: 0

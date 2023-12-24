@@ -71,9 +71,9 @@ public class NaturalObstacleSpawner: MonoBehaviour
 
     private void HandlePausing(bool doPausing)
     {
-        if (doPausing)
-            StopCoroutine(spawnObjectsCoroutine);
-        else
+        StopCoroutine(spawnObjectsCoroutine);
+
+        if (!doPausing)
             spawnObjectsCoroutine = StartCoroutine(SpawnObjects());
     }
 

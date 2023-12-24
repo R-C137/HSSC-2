@@ -5101,11 +5101,11 @@ MonoBehaviour:
   audioSource: {fileID: 2710456916891394139}
   hitSFX:
   - {fileID: 8300000, guid: 4cc4d650e2131a044ab6a005a7ea1d1c, type: 3}
-  shootBackTime: 3
+  shootBackTime: 5
   activationTime: 3
   isActivated: 0
   shot: 0
-  explosionDelay: 2.5
+  explosionDelay: 3.5
   effectRegion: {fileID: 414366194937521108}
   mask:
     serializedVersion: 2

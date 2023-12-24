@@ -59,7 +59,7 @@ public class SurpriseInside : MonoBehaviour
         isReplaced = true;
     }
 
-    public void TrapInside()
+    public void TrapInside(float activationTime)
     {
 
         GameObject selectedPrefab = trap;
@@ -69,6 +69,9 @@ public class SurpriseInside : MonoBehaviour
         if (selectedPrefab != null)
         {
             replacementPrefab = selectedPrefab;
+
+            anim.speed = anim.runtimeAnimatorController.animationClips[1].length / 
+                (GrinchPositionalHandling.singleton.positions[GrinchPositionalHandling.singleton.currentPosition].trapActivationTimeMultiplier * activationTime);
             anim.SetTrigger("Undulate");
         }
         else

@@ -82,9 +82,9 @@ public class Shooting : Singleton<Shooting>
     public CmBlendFinished blendHandler;
 
     /// <summary>
-    /// The projectile to shoot
+    /// The different projectiles to shoot
     /// </summary>
-    public GameObject projectile;
+    public GameObject[] projectile;
 
     /// <summary>
     /// The projectile to use when shooting an anvil
@@ -263,11 +263,10 @@ public class Shooting : Singleton<Shooting>
         if (Utility.singleton.giftCounter <= 0)
             return;
 
-        GameObject projectileObj = Instantiate(projectile);
+        GameObject projectileObj = Instantiate(projectile[Random.Range(0, projectile.Length)]);
         projectileObj.transform.position = shootingCamera.transform.position;
 
-        Rigidbody projectileRigidBody = projectileObj.GetComponent<Rigidbody>();
-        projectileRigidBody.AddForce(shootingCamera.transform.forward * projectileSpeed, ForceMode.VelocityChange);
+        projectileObj.GetComponent<Rigidbody>().AddForce(shootingCamera.transform.forward * projectileSpeed, ForceMode.VelocityChange);
 
         canShoot = false;
         Utility.singleton.giftCounter--;

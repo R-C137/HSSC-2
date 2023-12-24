@@ -144,6 +144,11 @@ public class Utility : Singleton<Utility>
     /// </summary>
     public bool isGameOver;
 
+    /// <summary>
+    /// Whether the game has currently started
+    /// </summary>
+    public bool gameStarted;
+
     public float distanceFlown
     {
         get
@@ -203,6 +208,8 @@ public class Utility : Singleton<Utility>
 
         StartCoroutine(PlayTimeHandler());
         StartCoroutine(DistanceFlownHandler());
+
+        Pause(true);
     }
 
     IEnumerator DistanceFlownHandler()
@@ -229,6 +236,12 @@ public class Utility : Singleton<Utility>
 
         if (Input.GetKeyDown(KeyCode.F11))
             Cursor.lockState = Cursor.lockState == CursorLockMode.Locked ? CursorLockMode.None : CursorLockMode.Locked;
+
+        if (!gameStarted && Input.GetKeyDown(PlayerMovement.singleton.controls.up))
+        {
+            Pause(false);
+            gameStarted = true;
+        }
 
         if(Input.GetKeyDown(pauseKey) && pauseCanvas != null)
         {

@@ -66,6 +66,11 @@ public class GrinchBehaviour : Singleton<GrinchBehaviour>
     public GameObject[] traps;
 
     /// <summary>
+    /// The size multipliers for the gifts
+    /// </summary>
+    public float minGiftSizeMultiplier, maxGiftSizeMultiplier;
+
+    /// <summary>
     /// The different SFXs to play
     /// </summary>
     public GrinchSFX sfx;
@@ -162,7 +167,7 @@ public class GrinchBehaviour : Singleton<GrinchBehaviour>
     {
         while (true)
         {
-            yield return new WaitForSeconds(spawnInterval);
+            yield return new WaitForSeconds(GrinchPositionalHandling.singleton.positions[GrinchPositionalHandling.singleton.currentPosition].objectSpawnInterval);
 
             if (!spawnObjects)
                 yield return new WaitUntil(() => spawnObjects);
@@ -171,12 +176,14 @@ public class GrinchBehaviour : Singleton<GrinchBehaviour>
             if (Random.Range(0, 2) == 1)
             {
                 var trapHandler = gift.GetComponent<SurpriseInside>();
-                trapHandler.trap = traps[Random.Range(0, traps.Length)];
-                trapHandler.TrapInside();
+                GameObject trap = traps[Random.Range(0, traps.Length)];
+
+                trapHandler.trap = trap;
+                trapHandler.TrapInside(trap.GetComponent<TrapBehaviour>().activationTime);
             }
 
             gift.transform.position = spawnRegion.GetRandomPoint();
-
+            gift.transform.localScale *= Random.Range(minGiftSizeMultiplier, maxGiftSizeMultiplier);
             gift.transform.parent = MapGeneration.singleton.spawnedTerrains[^1].transform;
         }
     }
@@ -187,6 +194,7 @@ public class GrinchBehaviour : Singleton<GrinchBehaviour>
     [ContextMenu("Stimulate Hit")]
     public void GrinchHit()
     {
+        Debug.Log("Hit");
         retreatHits--;
 
         Instantiate(smokePoof, followScript.gameObject.transform);

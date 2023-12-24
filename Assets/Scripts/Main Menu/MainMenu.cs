@@ -48,14 +48,14 @@ public struct Metrics
 public class MainMenu : MonoBehaviour
 {
     /// <summary>
-    /// The class handling the loading of the scene
-    /// </summary>
-    public SceneLoader sceneLoader;
-
-    /// <summary>
     /// Contains all of the metrics tracked
     /// </summary>
     public Metrics metrics;
+    
+    /// <summary>
+    /// The class handling the cutscene
+    /// </summary>
+    public CutsceneHandler cutscene;
 
     private void Start()
     {
@@ -75,7 +75,7 @@ public class MainMenu : MonoBehaviour
     /// </summary>
     public void Play()
     {
-        sceneLoader.LoadScene(1);
+        cutscene.DoCutscene();
     }
 
     /// <summary>

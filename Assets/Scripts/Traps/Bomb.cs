@@ -57,6 +57,17 @@ public class Bomb : TrapBehaviour
             SantaBehaviour.singleton.lives--;
 
             Logging.singleton.Log("Santa has hit an activated bomb and has been damaged", LogSeverity.Info);
+
+            bombSFX.clip = bombExplode[Random.Range(0, bombExplode.Length)];
+            bombSFX.Play();
+
+            bombSFX.transform.parent = null;
+
+            LeanTween.delayedCall(5f, () =>
+            {
+                if (bombSFX != null && bombSFX.gameObject != null)
+                    Destroy(bombSFX.gameObject);
+            });
         }
 
         base.TrapHit();

@@ -95,6 +95,15 @@ public class TrapBehaviour : MonoBehaviour
         audioSource.clip = hitSFX[Random.Range(0, hitSFX.Length)];
         audioSource.Play();
 
+        LeanTween.delayedCall(5f, () =>
+        {
+            if (audioSource != null && audioSource.gameObject != null)
+                Destroy(audioSource.gameObject);
+        });
+
+        if (isActivated)
+            SantaBehaviour.singleton.lives--;
+
         Destroy(gameObject);
     }
 
@@ -129,6 +138,8 @@ public class TrapBehaviour : MonoBehaviour
     protected virtual void ShootBack()
     {
         transform.parent = Utility.singleton.grinch.transform;
+
+        Debug.Log("shooting back");
 
         LeanTween.moveLocalX(gameObject, 0, shootBackTime).setEase(LeanTweenType.easeInElastic).setOnComplete(() =>
         {
