@@ -15,6 +15,7 @@
  */
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(Outline))]
 public class HoverHighlight : MonoBehaviour
@@ -64,7 +65,8 @@ public class HoverHighlight : MonoBehaviour
 
     private void OnMouseUpAsButton()
     {
-        onClick?.Invoke();
+        if(!EventSystem.current.IsPointerOverGameObject())
+            onClick?.Invoke();
     }
 
     private void OnMouseExit()

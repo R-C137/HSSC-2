@@ -57,6 +57,11 @@ public class CutsceneHandler : Singleton<CutsceneHandler>
     public bool doingCutscene;
 
     /// <summary>
+    /// Whether a scene is already being loaded
+    /// </summary>
+    public bool sceneLoading;
+
+    /// <summary>
     /// The id of the tween handling the cutscene
     /// </summary>
     int cutsceneTween;
@@ -118,7 +123,11 @@ public class CutsceneHandler : Singleton<CutsceneHandler>
     public void LoadScene()
     {
         //#TODO: Pause the video player
+        if (sceneLoading)
+            return;
 
         sceneLoader.LoadScene(1);
+
+        sceneLoading = true;
     }
 }

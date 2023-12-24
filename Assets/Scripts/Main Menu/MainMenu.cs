@@ -51,7 +51,22 @@ public class MainMenu : MonoBehaviour
     /// Contains all of the metrics tracked
     /// </summary>
     public Metrics metrics;
-    
+
+    /// <summary>
+    /// The game object used to show the tutorial
+    /// </summary>
+    public GameObject tutorial;
+
+    /// <summary>
+    /// The animator handling the zoom animation
+    /// </summary>
+    public Animator animator;
+
+    /// <summary>
+    /// How long is the zoom animation
+    /// </summary>
+    public float zoomAnimationTime;
+
     /// <summary>
     /// The class handling the cutscene
     /// </summary>
@@ -61,6 +76,11 @@ public class MainMenu : MonoBehaviour
     /// The notice for the webGL build
     /// </summary>
     public TextMeshProUGUI webGLNotice;
+
+    /// <summary>
+    /// Whether the play button has already been pressed
+    /// </summary>
+    public bool playedPressed;
 
     private void Start()
     {
@@ -72,7 +92,10 @@ public class MainMenu : MonoBehaviour
             metrics.maxCombo.text = $"Maximum Combo: X{PlayerPrefs.GetInt("metrics.maxCombo")}";
         }
         else
+        {
             metrics.metrics.SetActive(false);
+            tutorial.SetActive(true);
+        }
 
         if (Application.platform == RuntimePlatform.WebGLPlayer)
             webGLNotice.gameObject.SetActive(true);
@@ -83,7 +106,14 @@ public class MainMenu : MonoBehaviour
     /// </summary>
     public void Play()
     {
-        cutscene.DoCutscene();
+        if (playedPressed)
+            return;
+
+        animator.SetTrigger("Play");
+
+        LeanTween.delayedCall(zoomAnimationTime, () => cutscene.DoCutscene());
+
+        playedPressed = true;
     }
 
     /// <summary>

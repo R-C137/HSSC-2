@@ -245,7 +245,7 @@ public class Utility : Singleton<Utility>
 
         if(Input.GetKeyDown(pauseKey) && pauseCanvas != null)
         {
-            if (isGameOver)
+            if (isGameOver || !gameStarted)
                 return;
             pauseCanvas.SetActive(!isPaused);
 
