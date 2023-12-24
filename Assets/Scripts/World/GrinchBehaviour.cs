@@ -25,6 +25,34 @@ using CsUtils.Extensions;
 using System.Collections;
 using UnityEngine;
 
+[System.Serializable]
+public struct GrinchSFXChanced
+{
+    /// <summary>
+    /// The SFX to play
+    /// </summary>
+    public AudioClip SFX;
+
+    /// <summary>
+    /// The probability of this SFX to play
+    /// </summary>
+    public float probability;
+}
+
+[System.Serializable]
+public struct GrinchSFX
+{
+    /// <summary>
+    /// The SFXs to play when the grinch is hit
+    /// </summary>
+    public GrinchSFXChanced[] hit;
+
+    /// <summary>
+    /// The SFX to play when the grinch retreats
+    /// </summary>
+    public AudioClip retreat;
+}
+
 public class GrinchBehaviour : Singleton<GrinchBehaviour>
 {
     /// <summary>
@@ -36,6 +64,26 @@ public class GrinchBehaviour : Singleton<GrinchBehaviour>
     /// The different traps to be spawned
     /// </summary>
     public GameObject[] traps;
+
+    /// <summary>
+    /// The size multipliers for the gifts
+    /// </summary>
+    public float minGiftSizeMultiplier, maxGiftSizeMultiplier;
+
+    /// <summary>
+    /// The different SFXs to play
+    /// </summary>
+    public GrinchSFX sfx;
+
+    /// <summary>
+    /// The audio source handling the hit SFX
+    /// </summary>
+    public AudioSource hitSFX;
+
+    /// <summary>
+    /// The audio source handling the retreat SFX
+    /// </summary>
+    public AudioSource retreatSFX;
 
     /// <summary>
     /// The class handling the following of the player
@@ -119,7 +167,7 @@ public class GrinchBehaviour : Singleton<GrinchBehaviour>
     {
         while (true)
         {
-            yield return new WaitForSeconds(spawnInterval);
+            yield return new WaitForSeconds(GrinchPositionalHandling.singleton.positions[GrinchPositionalHandling.singleton.currentPosition].objectSpawnInterval);
 
             if (!spawnObjects)
                 yield return new WaitUntil(() => spawnObjects);
@@ -128,12 +176,14 @@ public class GrinchBehaviour : Singleton<GrinchBehaviour>
             if (Random.Range(0, 2) == 1)
             {
                 var trapHandler = gift.GetComponent<SurpriseInside>();
-                trapHandler.trap = traps[Random.Range(0, traps.Length)];
-                trapHandler.TrapInside();
+                GameObject trap = traps[Random.Range(0, traps.Length)];
+
+                trapHandler.trap = trap;
+                trapHandler.TrapInside(trap.GetComponent<TrapBehaviour>().activationTime);
             }
 
             gift.transform.position = spawnRegion.GetRandomPoint();
-
+            gift.transform.localScale *= Random.Range(minGiftSizeMultiplier, maxGiftSizeMultiplier);
             gift.transform.parent = MapGeneration.singleton.spawnedTerrains[^1].transform;
         }
     }
@@ -144,9 +194,12 @@ public class GrinchBehaviour : Singleton<GrinchBehaviour>
     [ContextMenu("Stimulate Hit")]
     public void GrinchHit()
     {
+        Debug.Log("Hit");
         retreatHits--;
 
         Instantiate(smokePoof, followScript.gameObject.transform);
+
+        PlayHitSFX();
 
         if (retreatHits != 0)
             return;
@@ -174,6 +227,32 @@ public class GrinchBehaviour : Singleton<GrinchBehaviour>
                      followScript.transform.parent = defaultParent;
                      StartCoroutine(Recover());
                  });
+
+        PlayRetreatSFX();
+
+        TrashTalkHandler.singleton.audioSource.Stop();
+
+        void PlayHitSFX()
+        {
+            WeightedNumber[] weights = new WeightedNumber[sfx.hit.Length];
+            for (int i = 0; i < sfx.hit.Length; i++)
+            {
+                weights[i] = new WeightedNumber()
+                {
+                    probability = sfx.hit[i].probability,
+                    number = i
+                };
+            }
+
+            hitSFX.clip = sfx.hit[StaticUtils.WeightedRandom(weights)].SFX;
+            hitSFX.Play();
+        }
+
+        void PlayRetreatSFX()
+        {
+            retreatSFX.clip = sfx.retreat;
+            retreatSFX.Play();
+        }
     }
 
     IEnumerator Recover()

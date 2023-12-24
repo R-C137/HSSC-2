@@ -70,7 +70,9 @@ public class ProjectileBehaviour : MonoBehaviour
         if (other.CompareTag("Delivery"))
         {
             Utility.singleton.GiftDelivered();
+
             Destroy(gameObject);
+            Destroy(other.gameObject);
         }
     }
 }

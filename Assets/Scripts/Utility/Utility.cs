@@ -85,6 +85,11 @@ public class Utility : Singleton<Utility>
     public CommonSFX commonSFX;
 
     /// <summary>
+    /// The shower for the current distance flown
+    /// </summary>
+    public TextMeshProUGUI distanceShower;
+
+    /// <summary>
     /// Class handling the scene loading animation
     /// </summary>
     public SceneLoader sceneLoader;
@@ -139,6 +144,11 @@ public class Utility : Singleton<Utility>
     /// </summary>
     public bool isGameOver;
 
+    /// <summary>
+    /// Whether the game has currently started
+    /// </summary>
+    public bool gameStarted;
+
     public float distanceFlown
     {
         get
@@ -160,6 +170,12 @@ public class Utility : Singleton<Utility>
     /// <param name="doPausing">Whether the game was paused</param>
     public delegate void GamePaused(bool doPausing);
     public event GamePaused onGamePaused;
+
+    /// <summary>
+    /// Raised when a setting is updated
+    /// </summary>
+    public delegate void SettingsUpdated();
+    public event SettingsUpdated onSettingsUpdated;
 
     /// <summary>
     /// The starting position of the player
@@ -192,6 +208,8 @@ public class Utility : Singleton<Utility>
 
         StartCoroutine(PlayTimeHandler());
         StartCoroutine(DistanceFlownHandler());
+
+        Pause(true);
     }
 
     IEnumerator DistanceFlownHandler()
@@ -214,11 +232,16 @@ public class Utility : Singleton<Utility>
 
     private void Update()
     {
-
         giftCounterShower.text = giftCounter.ToString();
 
         if (Input.GetKeyDown(KeyCode.F11))
             Cursor.lockState = Cursor.lockState == CursorLockMode.Locked ? CursorLockMode.None : CursorLockMode.Locked;
+
+        if (!gameStarted && Input.GetKeyDown(PlayerMovement.singleton.controls.up))
+        {
+            Pause(false);
+            gameStarted = true;
+        }
 
         if(Input.GetKeyDown(pauseKey) && pauseCanvas != null)
         {
@@ -232,6 +255,16 @@ public class Utility : Singleton<Utility>
         }
     }
 
+    public void SettingUpdated()
+    {
+        onSettingsUpdated?.Invoke();
+    }
+
+    private void FixedUpdate()
+    {
+        distanceShower.text = $"{Mathf.Round(distanceFlown):N0}M";
+    }
+
     /// <summary>
     /// Sets the cursor lock mode
     /// </summary>
@@ -239,6 +272,11 @@ public class Utility : Singleton<Utility>
     public void LockCursor(bool lockState)
     {
         Cursor.lockState = lockState ? CursorLockMode.Locked : CursorLockMode.None;
+    }
+
+    public void ResetTimescale()
+    {
+        Shooting.singleton.ResetTimescale();
     }
 
     /// <summary>

@@ -75,6 +75,8 @@ public class SantaBehaviour : Singleton<SantaBehaviour>
     {
         if(lives <= 0)
             Utility.singleton.DoGameOver();
+
+        Utility.singleton.ShakeCamera();
     }
 
     private void OnTriggerEnter(Collider other)

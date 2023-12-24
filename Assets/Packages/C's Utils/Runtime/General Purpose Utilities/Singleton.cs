@@ -22,7 +22,7 @@ namespace CsUtils
 {
     public class Singleton<T> : MonoBehaviour where T : Component
     {
-        private static T instance;
+        public static T instance;
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Whilst properties should use PascalCase, I prefer using camelCase in that situation despite it being a property. It simplifies access to the singleton and ensures consistency")]
         public static T singleton

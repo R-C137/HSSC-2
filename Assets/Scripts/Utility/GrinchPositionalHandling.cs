@@ -25,12 +25,17 @@ public struct GrinchPosition
     /// <summary>
     /// The spawn rate of gifts/traps from the grinch
     /// </summary>
-    public float objectSpawnRate;
+    public float objectSpawnInterval;
 
     /// <summary>
     /// The speed at which the Grinch will transition to this position
     /// </summary>
     public float transitionalSpeed;
+
+    /// <summary>
+    /// The activation time multiplier for this position
+    /// </summary>
+    public float trapActivationTimeMultiplier;
 }
 
 public class GrinchPositionalHandling : Singleton<GrinchPositionalHandling>

@@ -35,6 +35,20 @@ public struct ShootingControls
     public KeyCode shoot;
 }
 
+[System.Serializable]
+public struct AnvilSprites
+{
+    /// <summary>
+    /// Sprite to use when the anvil is active
+    /// </summary>
+    public Sprite active;
+
+    /// <summary>
+    /// Sprite to use when the anvil is inactive
+    /// </summary>
+    public Sprite inactive;
+}
+
 public class Shooting : Singleton<Shooting>
 {
     /// <summary>
@@ -46,6 +60,11 @@ public class Shooting : Singleton<Shooting>
     /// The shower for the anvil icon
     /// </summary>
     public Image anvilIcon;
+
+    /// <summary>
+    /// The different sprites to use for the anvil
+    /// </summary>
+    public AnvilSprites anvilSprites;
 
     /// <summary>
     /// The audio source used to play the SFX
@@ -63,9 +82,9 @@ public class Shooting : Singleton<Shooting>
     public CmBlendFinished blendHandler;
 
     /// <summary>
-    /// The projectile to shoot
+    /// The different projectiles to shoot
     /// </summary>
-    public GameObject projectile;
+    public GameObject[] projectile;
 
     /// <summary>
     /// The projectile to use when shooting an anvil
@@ -118,6 +137,11 @@ public class Shooting : Singleton<Shooting>
     public bool shootingAnvil;
 
     /// <summary>
+    /// The range of the mouse sensitivity
+    /// </summary>
+    public float minMouseSens, maxMouseSens;
+
+    /// <summary>
     /// The x rotation of the camera
     /// </summary>
     float xRot;
@@ -141,8 +165,16 @@ public class Shooting : Singleton<Shooting>
     {
         blendHandler.onBlendFinished += BlendFinished;
         Utility.singleton.onGamePaused += HandlePausing;
+        Utility.singleton.onSettingsUpdated += UpdateSettings;
 
         normalFixedDeltatime = Time.fixedDeltaTime;
+
+        sensitivity = Mathf.Lerp(minMouseSens, maxMouseSens, PlayerPrefs.GetFloat("settings.mouseSensitivity", .5f));
+    }
+
+    private void UpdateSettings()
+    {
+        sensitivity = Mathf.Lerp(minMouseSens, maxMouseSens, PlayerPrefs.GetFloat("settings.mouseSensitivity", .5f));
     }
 
     private void HandlePausing(bool doPausing)
@@ -188,7 +220,7 @@ public class Shooting : Singleton<Shooting>
         HandleCameraRotation();
         HandleShooting();
 
-        anvilIcon.gameObject.SetActive(shootingAnvil);
+        anvilIcon.sprite = shootingAnvil ? anvilSprites.active : anvilSprites.inactive;
     }
 
     void HandleCameraRotation()
@@ -244,11 +276,10 @@ public class Shooting : Singleton<Shooting>
         if (Utility.singleton.giftCounter <= 0)
             return;
 
-        GameObject projectileObj = Instantiate(projectile);
+        GameObject projectileObj = Instantiate(projectile[Random.Range(0, projectile.Length)]);
         projectileObj.transform.position = shootingCamera.transform.position;
 
-        Rigidbody projectileRigidBody = projectileObj.GetComponent<Rigidbody>();
-        projectileRigidBody.AddForce(shootingCamera.transform.forward * projectileSpeed, ForceMode.VelocityChange);
+        projectileObj.GetComponent<Rigidbody>().AddForce(shootingCamera.transform.forward * projectileSpeed, ForceMode.VelocityChange);
 
         canShoot = false;
         Utility.singleton.giftCounter--;
