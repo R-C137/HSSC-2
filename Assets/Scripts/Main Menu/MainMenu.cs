@@ -58,6 +58,11 @@ public class MainMenu : MonoBehaviour
     public GameObject tutorial;
 
     /// <summary>
+    /// The audio source handling the music of the main menu
+    /// </summary>
+    public AudioSource mainMenuMusic;
+
+    /// <summary>
     /// The animator handling the zoom animation
     /// </summary>
     public Animator animator;
@@ -99,6 +104,13 @@ public class MainMenu : MonoBehaviour
 
         if (Application.platform == RuntimePlatform.WebGLPlayer)
             webGLNotice.gameObject.SetActive(true);
+
+        UpdateMusicVolume(PlayerPrefs.GetFloat("settings.volume.music", 1));
+    }
+
+    public void UpdateMusicVolume(float volume)
+    {
+        mainMenuMusic.volume = PlayerPrefs.GetFloat("settings.volume.general", 1) * volume;
     }
 
     /// <summary>
@@ -110,6 +122,10 @@ public class MainMenu : MonoBehaviour
             return;
 
         animator.SetTrigger("Play");
+
+        LeanTween.value(mainMenuMusic.volume, 0, 5f)
+                 .setOnUpdate(v => mainMenuMusic.volume = v)
+                 .setOnComplete(() => mainMenuMusic.Stop());
 
         LeanTween.delayedCall(zoomAnimationTime, () => cutscene.DoCutscene());
 

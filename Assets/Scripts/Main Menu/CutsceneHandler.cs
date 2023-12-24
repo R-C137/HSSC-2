@@ -13,6 +13,7 @@ using CsUtils;
 using CsUtils.UI;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Video;
 
 public class CutsceneHandler : Singleton<CutsceneHandler>
 {
@@ -22,9 +23,9 @@ public class CutsceneHandler : Singleton<CutsceneHandler>
     public MultiFade fader;
 
     /// <summary>
-    /// Temp
+    /// The cutscene to be played
     /// </summary>
-    public Image video;
+    public VideoPlayer cutscene;
 
     /// <summary>
     /// The class handling the loading of the scene
@@ -115,7 +116,12 @@ public class CutsceneHandler : Singleton<CutsceneHandler>
 
         doingCutscene = true;
 
-        video.gameObject.SetActive(true);
+        cutscene.gameObject.SetActive(true);
+
+        cutscene.SetDirectAudioVolume(0, PlayerPrefs.GetFloat("settings.volume.general", 1));
+        cutscene.targetTexture.Release();
+        cutscene.Play();
+
 
         cutsceneTween = LeanTween.delayedCall(cutsceneTime, LoadScene).uniqueId;
     }
@@ -126,6 +132,7 @@ public class CutsceneHandler : Singleton<CutsceneHandler>
         if (sceneLoading)
             return;
 
+        cutscene.Pause();
         sceneLoader.LoadScene(1);
 
         sceneLoading = true;
