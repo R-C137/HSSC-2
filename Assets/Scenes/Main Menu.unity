@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.09890766, g: 0.09194654, b: 0.16881797, a: 1}
+  m_IndirectSpecularColor: {r: 0.11821718, g: 0.11357274, b: 0.18162513, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -251,8 +251,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 3.2979114, y: 1.5372093, z: 3.4663026}
+  m_Center: {x: 0.0983275, y: 0.2686043, z: 0.62067723}
 --- !u!23 &27688289
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -333,7 +333,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outline: {fileID: 27688293}
-  outlineWidth: 2
+  outlineWidth: 5
   onClick:
     m_PersistentCalls:
       m_Calls:
@@ -375,7 +375,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   outlineMode: 1
   outlineColor: {r: 1, g: 1, b: 1, a: 1}
-  outlineWidth: 1
+  outlineWidth: 3
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
@@ -2414,7 +2414,7 @@ Transform:
   m_GameObject: {fileID: 909353167}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -12.16, y: 10.4, z: 44.85}
+  m_LocalPosition: {x: -12.16, y: 10.4, z: 45.65}
   m_LocalScale: {x: 1.8485, y: 4.1917458, z: 7.0612354}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2433,7 +2433,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outline: {fileID: 909353173}
-  outlineWidth: 2
+  outlineWidth: 5
   onClick:
     m_PersistentCalls:
       m_Calls:
@@ -2475,7 +2475,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   outlineMode: 1
   outlineColor: {r: 1, g: 1, b: 1, a: 1}
-  outlineWidth: 1
+  outlineWidth: 3
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []

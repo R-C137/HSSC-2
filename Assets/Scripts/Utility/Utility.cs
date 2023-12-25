@@ -90,6 +90,11 @@ public class Utility : Singleton<Utility>
     public TextMeshProUGUI distanceShower;
 
     /// <summary>
+    /// The text shown at the start of the game
+    /// </summary>
+    public GameObject startText;
+
+    /// <summary>
     /// Class handling the scene loading animation
     /// </summary>
     public SceneLoader sceneLoader;
@@ -241,6 +246,7 @@ public class Utility : Singleton<Utility>
         {
             Pause(false);
             gameStarted = true;
+            startText.SetActive(false);
         }
 
         if(Input.GetKeyDown(pauseKey) && pauseCanvas != null)
